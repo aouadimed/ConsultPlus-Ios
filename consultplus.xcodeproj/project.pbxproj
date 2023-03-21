@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F88989107D04470ACBEC2A8 /* Pods_consultplus_consultplusUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D484B1AC09B143AA33D0113 /* Pods_consultplus_consultplusUITests.framework */; };
 		5410043A29C889080012724B /* consultplusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410043929C889080012724B /* consultplusApp.swift */; };
 		5410043C29C889080012724B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410043B29C889080012724B /* ContentView.swift */; };
 		5410043E29C889090012724B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5410043D29C889090012724B /* Assets.xcassets */; };
@@ -17,6 +18,10 @@
 		5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C60E29C8C289008BE8EC /* SignUpView.swift */; };
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
 		54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */; };
+		54F7757F29CA0A1500EA2EA7 /* ApiManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7757E29CA0A1500EA2EA7 /* ApiManger.swift */; };
+		54F7758229CA0E4800EA2EA7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7758129CA0E4800EA2EA7 /* UserModel.swift */; };
+		63F2A9E39DEE2077D651358F /* Pods_consultplus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5788AF3192FF4C7C17DA1CA9 /* Pods_consultplus.framework */; };
+		AE39778E71801F02425A2E74 /* Pods_consultplusTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AEFBC7264620A260AF0FE3D /* Pods_consultplusTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09E732B8214C65C624D74FBF /* Pods-consultplus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplus.release.xcconfig"; path = "Target Support Files/Pods-consultplus/Pods-consultplus.release.xcconfig"; sourceTree = "<group>"; };
+		0EBA8060586435E4E98AB37F /* Pods-consultplusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplusTests.debug.xcconfig"; path = "Target Support Files/Pods-consultplusTests/Pods-consultplusTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1D484B1AC09B143AA33D0113 /* Pods_consultplus_consultplusUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_consultplus_consultplusUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27BB27C43EAB0E3F8E459564 /* Pods-consultplus-consultplusUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplus-consultplusUITests.debug.xcconfig"; path = "Target Support Files/Pods-consultplus-consultplusUITests/Pods-consultplus-consultplusUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2877CD6145B388DB03A3DE1E /* Pods-consultplusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplusTests.release.xcconfig"; path = "Target Support Files/Pods-consultplusTests/Pods-consultplusTests.release.xcconfig"; sourceTree = "<group>"; };
+		4B6345EE1C75121ED595136B /* Pods-consultplus-consultplusUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplus-consultplusUITests.release.xcconfig"; path = "Target Support Files/Pods-consultplus-consultplusUITests/Pods-consultplus-consultplusUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5410043629C889080012724B /* consultplus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = consultplus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5410043929C889080012724B /* consultplusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultplusApp.swift; sourceTree = "<group>"; };
 		5410043B29C889080012724B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,6 +61,11 @@
 		5429C60E29C8C289008BE8EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		5429C61029C8C3F9008BE8EC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
+		54F7757E29CA0A1500EA2EA7 /* ApiManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManger.swift; sourceTree = "<group>"; };
+		54F7758129CA0E4800EA2EA7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		5788AF3192FF4C7C17DA1CA9 /* Pods_consultplus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_consultplus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AEFBC7264620A260AF0FE3D /* Pods_consultplusTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_consultplusTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABE763C448FE303CA0795F57 /* Pods-consultplus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consultplus.debug.xcconfig"; path = "Target Support Files/Pods-consultplus/Pods-consultplus.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F2A9E39DEE2077D651358F /* Pods_consultplus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE39778E71801F02425A2E74 /* Pods_consultplusTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,12 +89,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F88989107D04470ACBEC2A8 /* Pods_consultplus_consultplusUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1B40861E1C95C0D1273958 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5788AF3192FF4C7C17DA1CA9 /* Pods_consultplus.framework */,
+				1D484B1AC09B143AA33D0113 /* Pods_consultplus_consultplusUITests.framework */,
+				6AEFBC7264620A260AF0FE3D /* Pods_consultplusTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5410042D29C889080012724B = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +113,8 @@
 				5410044929C889090012724B /* consultplusTests */,
 				5410045329C889090012724B /* consultplusUITests */,
 				5410043729C889080012724B /* Products */,
+				ADDCFCED3F3D33FBAA909ADD /* Pods */,
+				2C1B40861E1C95C0D1273958 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +131,8 @@
 		5410043829C889080012724B /* consultplus */ = {
 			isa = PBXGroup;
 			children = (
+				54F7758029CA0D0300EA2EA7 /* Models */,
+				54F7757D29CA098500EA2EA7 /* ApiManger */,
 				5429C60D29C8C259008BE8EC /* Screens */,
 				5410043929C889080012724B /* consultplusApp.swift */,
 				5410043B29C889080012724B /* ContentView.swift */,
@@ -144,6 +177,35 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		54F7757D29CA098500EA2EA7 /* ApiManger */ = {
+			isa = PBXGroup;
+			children = (
+				54F7757E29CA0A1500EA2EA7 /* ApiManger.swift */,
+			);
+			path = ApiManger;
+			sourceTree = "<group>";
+		};
+		54F7758029CA0D0300EA2EA7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54F7758129CA0E4800EA2EA7 /* UserModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ADDCFCED3F3D33FBAA909ADD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ABE763C448FE303CA0795F57 /* Pods-consultplus.debug.xcconfig */,
+				09E732B8214C65C624D74FBF /* Pods-consultplus.release.xcconfig */,
+				27BB27C43EAB0E3F8E459564 /* Pods-consultplus-consultplusUITests.debug.xcconfig */,
+				4B6345EE1C75121ED595136B /* Pods-consultplus-consultplusUITests.release.xcconfig */,
+				0EBA8060586435E4E98AB37F /* Pods-consultplusTests.debug.xcconfig */,
+				2877CD6145B388DB03A3DE1E /* Pods-consultplusTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,9 +213,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5410045A29C889090012724B /* Build configuration list for PBXNativeTarget "consultplus" */;
 			buildPhases = (
+				1ED86B1655691CEA65EBA6C4 /* [CP] Check Pods Manifest.lock */,
 				5410043229C889080012724B /* Sources */,
 				5410043329C889080012724B /* Frameworks */,
 				5410043429C889080012724B /* Resources */,
+				E904A101A8D425434514876C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +232,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5410045D29C889090012724B /* Build configuration list for PBXNativeTarget "consultplusTests" */;
 			buildPhases = (
+				4F46E10F5EB45716ACC8707F /* [CP] Check Pods Manifest.lock */,
 				5410044229C889090012724B /* Sources */,
 				5410044329C889090012724B /* Frameworks */,
 				5410044429C889090012724B /* Resources */,
@@ -186,9 +251,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5410046029C889090012724B /* Build configuration list for PBXNativeTarget "consultplusUITests" */;
 			buildPhases = (
+				ED917128D1B9D04BB8EF154D /* [CP] Check Pods Manifest.lock */,
 				5410044C29C889090012724B /* Sources */,
 				5410044D29C889090012724B /* Frameworks */,
 				5410044E29C889090012724B /* Resources */,
+				14A10466A40D390F61115E4A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -269,11 +336,116 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		14A10466A40D390F61115E4A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-consultplus-consultplusUITests/Pods-consultplus-consultplusUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-consultplus-consultplusUITests/Pods-consultplus-consultplusUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-consultplus-consultplusUITests/Pods-consultplus-consultplusUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1ED86B1655691CEA65EBA6C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-consultplus-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F46E10F5EB45716ACC8707F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-consultplusTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E904A101A8D425434514876C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-consultplus/Pods-consultplus-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-consultplus/Pods-consultplus-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-consultplus/Pods-consultplus-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED917128D1B9D04BB8EF154D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-consultplus-consultplusUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5410043229C889080012724B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54F7757F29CA0A1500EA2EA7 /* ApiManger.swift in Sources */,
+				54F7758229CA0E4800EA2EA7 /* UserModel.swift in Sources */,
 				54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */,
 				5410043C29C889080012724B /* ContentView.swift in Sources */,
 				5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */,
@@ -431,6 +603,7 @@
 		};
 		5410045B29C889090012724B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABE763C448FE303CA0795F57 /* Pods-consultplus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -459,6 +632,7 @@
 		};
 		5410045C29C889090012724B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09E732B8214C65C624D74FBF /* Pods-consultplus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -487,6 +661,7 @@
 		};
 		5410045E29C889090012724B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EBA8060586435E4E98AB37F /* Pods-consultplusTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -506,6 +681,7 @@
 		};
 		5410045F29C889090012724B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2877CD6145B388DB03A3DE1E /* Pods-consultplusTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -525,6 +701,7 @@
 		};
 		5410046129C889090012724B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27BB27C43EAB0E3F8E459564 /* Pods-consultplus-consultplusUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -542,6 +719,7 @@
 		};
 		5410046229C889090012724B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B6345EE1C75121ED595136B /* Pods-consultplus-consultplusUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

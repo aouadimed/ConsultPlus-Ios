@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-
-
+import SnapKit
 
 
 struct SignUpView: View {
@@ -15,6 +14,7 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var Confirmpassword: String = ""
+    @State private var willMoveToNextScreen = false
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
@@ -60,13 +60,24 @@ struct SignUpView: View {
                         .shadow(color: Color.black.opacity(0.08), radius: 60 ,x: 0.0,y:16)
                         .padding()
                     
-                    Text("Sign Up")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("AccentColor"))
-                        .cornerRadius(50).padding()
+                    
+                    Button(action: {
+                        if password == Confirmpassword{
+                            signup()
+                        }else{
+
+                            
+                        }
+                    }, label: {
+                        Text("Sign Up")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("AccentColor"))
+                            .cornerRadius(50).padding()
+                    })
+
                     
                     HStack{
                         Text("Aleardy have an account ? ")
@@ -79,18 +90,47 @@ struct SignUpView: View {
                         
                         ).navigationBarHidden(true)
                     }
+                    
+                    
                 }
                 
                 
                 
                 
-                
-                
-                
-                
+        
             }
         }
     }
+    
+    func signup(){
+        
+        let user = UserModel(name: fullname, email: email, password: password)
+        ApiManager.shareInstance.callingRegisterApi(Register: user)
+        {
+            
+            (result) in
+             switch result
+             {
+             case .success:
+                 do {
+               
+                     print("sa7a")
+            willMoveToNextScreen = true
+                 }
+                 
+             case .failure:
+                 
+                print("fuck no")
+
+             }
+            
+            
+            
+            
+        }
+        
+    }
+    
 }
         
 struct SignUpView_Previews: PreviewProvider {

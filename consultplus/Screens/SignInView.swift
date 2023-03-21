@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-
-
+import Alamofire
+import KeychainAccess
 
 
 struct SignInView: View {
@@ -53,13 +53,23 @@ struct SignInView: View {
                     
                     
                     ).navigationBarHidden(true)
-                    Text("Sign In")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("AccentColor"))
-                        .cornerRadius(50).padding()
+                    
+                    Button(action: {
+                        
+                        NavigateToMainPage()
+                        
+                        
+                    }, label: {
+                        Text("Sign In")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("AccentColor"))
+                            .cornerRadius(50).padding()
+                    })
+                    
+
                     
                     HStack{
                         Text("Don't have an account ? ")
@@ -84,6 +94,41 @@ struct SignInView: View {
             }
         }
     }
+    
+    func NavigateToMainPage(){
+        
+        let user = UserModel(email: email, password: password)
+        ApiManager.shareInstance.callingLoginApi(Login: user)
+        {
+            
+            (result) in
+             switch result
+             {
+             case .success:
+                 do {
+               
+                     print("sa7a")
+
+                    
+                     let keychain = Keychain(service: "esprit.tn.consultplus")
+                     keychain["Email"] = email
+                     
+                     
+                 }
+                 
+             case .failure:
+                 
+                print("fuck no")
+
+             }
+            
+            
+            
+            
+        }
+        
+    }
+    
 }
         
 struct SignInView_Previews: PreviewProvider {
@@ -91,3 +136,5 @@ struct SignInView_Previews: PreviewProvider {
         SignInView()
     }
 }
+
+
