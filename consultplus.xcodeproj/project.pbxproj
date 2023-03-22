@@ -18,6 +18,7 @@
 		5410045729C889090012724B /* consultplusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */; };
 		5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C60E29C8C289008BE8EC /* SignUpView.swift */; };
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
+		54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */; };
 		54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */; };
 		54F7757F29CA0A1500EA2EA7 /* ApiManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7757E29CA0A1500EA2EA7 /* ApiManger.swift */; };
 		54F7758229CA0E4800EA2EA7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7758129CA0E4800EA2EA7 /* UserModel.swift */; };
@@ -62,6 +63,7 @@
 		5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5429C60E29C8C289008BE8EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		5429C61029C8C3F9008BE8EC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
 		54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 		54F7757E29CA0A1500EA2EA7 /* ApiManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManger.swift; sourceTree = "<group>"; };
 		54F7758129CA0E4800EA2EA7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				5429C61029C8C3F9008BE8EC /* SignInView.swift */,
 				54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */,
 				5408AFAC29CA638900B2795B /* MainActivityView.swift */,
+				54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */,
 				5408AFAD29CA638900B2795B /* MainActivityView.swift in Sources */,
 				5410043A29C889080012724B /* consultplusApp.swift in Sources */,
+				54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

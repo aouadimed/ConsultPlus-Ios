@@ -21,7 +21,7 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://172.17.1.3:5000/"
+    let baseUrl = "http://172.17.1.104:5000/"
 
 
     func callingLoginApi(Login: UserModel, completionHandler : @escaping Handler)

@@ -71,7 +71,6 @@ struct SignInView: View {
                             .cornerRadius(50).padding()
                     })
                     
-
                     
                     HStack{
                         Text("Don't have an account ? ")
@@ -84,13 +83,14 @@ struct SignInView: View {
                         
                         ).navigationBarHidden(true)
                     }
+                    
+                    
                 }
                 
                 
                 
                 
-                
-                
+
                 
                 
             }
@@ -100,7 +100,10 @@ struct SignInView: View {
                     ForgetPasswordView()
                 }
         }
+            
+            
         }
+
     }
     
     func NavigateToMainPage(){
