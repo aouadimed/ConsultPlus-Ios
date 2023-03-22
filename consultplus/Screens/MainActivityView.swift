@@ -9,7 +9,25 @@ import SwiftUI
 
 struct MainActivityView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+
+
+
+        HStack{
+            Button(action: {
+                
+            }, label: {
+                VStack{
+                    Image(systemName: "house").frame(maxWidth: .infinity)
+                    Text("home")
+                }
+            })
+        }.padding()
+            .background(Color.accentColor)
+            .clipShape(Capsule())
+            .padding()
+
+
     }
 }
 

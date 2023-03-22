@@ -14,9 +14,9 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var Confirmpassword: String = ""
-    @State private var willMoveToNextScreen = false
+    @State private var path = NavigationPath()
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             ZStack(alignment: .top) {
                 Color(.white).edgesIgnoringSafeArea(.all)
                 Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
@@ -99,6 +99,12 @@ struct SignUpView: View {
                 
         
             }
+            .navigationDestination(for: String.self){
+                view in
+                if view == "signin"{
+                        SignInView()
+                }
+            }
         }
     }
     
@@ -115,7 +121,7 @@ struct SignUpView: View {
                  do {
                
                      print("sa7a")
-            willMoveToNextScreen = true
+                     path.append("signin")
                  }
                  
              case .failure:

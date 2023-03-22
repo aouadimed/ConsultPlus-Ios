@@ -13,8 +13,10 @@ import KeychainAccess
 struct SignInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var path = NavigationPath()
+
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             ZStack(alignment: .top) {
                 Color(.white).edgesIgnoringSafeArea(.all)
                 Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
@@ -92,6 +94,12 @@ struct SignInView: View {
                 
                 
             }
+            .navigationDestination(for: String.self){
+                view in
+                if view == "ForgetPassword"{
+                    ForgetPasswordView()
+                }
+        }
         }
     }
     
@@ -113,7 +121,7 @@ struct SignInView: View {
                      let keychain = Keychain(service: "esprit.tn.consultplus")
                      keychain["Email"] = email
                      
-                     
+                     path.append("ForgetPassword")
                  }
                  
              case .failure:
