@@ -13,11 +13,14 @@ import KeychainAccess
 struct SignInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var path = NavigationPath()
-
+    @State private var navigateToMainPage = false
+    
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationView{
             ZStack(alignment: .top) {
+                NavigationLink(destination: UpdateProfileView().navigationBarBackButtonHidden(true), isActive: $navigateToMainPage) {
+        EmptyView()
+                }.navigationBarBackButtonHidden(true)
                 Color(.white).edgesIgnoringSafeArea(.all)
                 Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
                 VStack{
@@ -94,12 +97,7 @@ struct SignInView: View {
                 
                 
             }
-            .navigationDestination(for: String.self){
-                view in
-                if view == "ForgetPassword"{
-                    ForgetPasswordView()
-                }
-        }
+
             
             
         }
@@ -115,21 +113,27 @@ struct SignInView: View {
             (result) in
              switch result
              {
-             case .success:
+             case .success(let userResponse as ApiManager.UserResponse):
                  do {
-               
                      print("sa7a")
-
+                     // Accessing the name and role properties of the UserResponse object
+                     let name = userResponse.name
+                     let role = userResponse.role ?? "Unknown"
+                     print("Welcome \(name)! Your role is \(role)")
                     
                      let keychain = Keychain(service: "esprit.tn.consultplus")
                      keychain["Email"] = email
-                     
-                     path.append("ForgetPassword")
+                     keychain["Name"] = name
+                     keychain["Role"] = role
+                     navigateToMainPage = true
                  }
                  
              case .failure:
                  
                 print("fuck no")
+                 
+             default:
+                 print("Unexpected result type")
 
              }
             

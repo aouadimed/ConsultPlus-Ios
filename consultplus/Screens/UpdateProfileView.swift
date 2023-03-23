@@ -6,15 +6,27 @@
 //
 
 import SwiftUI
+import KeychainAccess
 
 struct UpdateProfileView: View {
     init(){
         UISegmentedControl.appearance().selectedSegmentTintColor = .lightGray
+        
     }
-    @State private var path = NavigationPath()
     @State private var selected_role : ParRole = .patient
+    @State private var name: String = ""
+    @State private var email: String = ""
+    @State private var firstname: String = ""
+    @State private var lastname: String = ""
+    @State private var birthdate = Date()
+    @State private var selected_gender : Gender = .male
+    @State private var adresse: String = ""
+    @State private var selected_specialite: Specialite = .Surgery
+    @State private var yearsOfpractice: String = ""
+    @State private var patientnb: String = ""
+    @State private var description: String = ""
     var body: some View {
-        NavigationStack(path: $path){
+        NavigationView{
                 ZStack(alignment: .top) {
                     Color(.white).edgesIgnoringSafeArea(.all)
                     Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
@@ -25,7 +37,7 @@ struct UpdateProfileView: View {
                             Spacer()
                             VStack{
                                 Text("Hello_").fixedSize()
-                                Text("aouadi")
+                                Text(self.name)
                             }.frame(height: 50).fixedSize()
                             Spacer()
                             Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
@@ -37,7 +49,7 @@ struct UpdateProfileView: View {
                             }
                             
                         }.pickerStyle(SegmentedPickerStyle()).padding()
-                        ChosenRoleView(selected_role: selected_role)
+                        ChosenRoleView(selected_role: selected_role,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description)
                         
                         
                         
@@ -52,9 +64,13 @@ struct UpdateProfileView: View {
                     
                     
                     
-                }
+                } 
             
 
+        }.onAppear {
+            let keychain = Keychain(service: "esprit.tn.consultplus")
+            self.name = keychain["Name"] ?? ""
+            self.email = keychain["Email"] ?? ""
         }
 
 
@@ -80,19 +96,33 @@ enum Gender : String,CaseIterable{
     case female = "Female"
 }
 
+enum Specialite : String,CaseIterable{
+    case Dermatology = "Dermatology"
+    case Optometry = "Optometry"
+    case Neurosurgery = "Neurosurgery"
+    case General = "General"
+    case Surgery = "Surgery"
+    case Psychiatry = "Psychiatry"
+    case Ophthalmology = "Ophthalmology"
+    case Virology = "Virology"
+    case Radiology = "Radiology"
+    case Plastic_Surgery = "Plastic Surgery"
+    case Obstetrics = "Obstetrics"
+    case Orthopedics = "Orthopedics"
+}
 struct ChosenRoleView : View {
     var selected_role : ParRole
-    @State private var fullname: String = ""
-    @State private var email: String = ""
-    @State private var firstname: String = ""
-    @State private var lastname: String = ""
-    @State private var birthdate = Date()
-    @State private var selected_gender : Gender = .male
-    @State private var adresse: String = ""
-    @State private var selected_specialite: Specialite = .Surgery
-    @State private var yearsOfpractice: String = ""
-    @State private var patientnb: String = ""
-    @State private var description: String = ""
+    @Binding var fullname: String
+    @Binding var email: String
+    @Binding var firstname: String
+    @Binding var lastname: String
+    @Binding var birthdate : Date
+    @Binding var selected_gender : Gender
+    @Binding var adresse: String
+    @Binding var  selected_specialite :Specialite
+    @Binding var  yearsOfpractice: String
+    @Binding var  patientnb: String
+    @Binding var  description: String
     var body: some View {
         
         switch selected_role {
@@ -116,6 +146,7 @@ struct ChosenRoleView : View {
         @Binding var birthdate : Date
         @Binding var selected_gender : Gender
         @Binding var adresse: String
+        
         var body: some View{
             TextField("Enter your full name",text: $fullname)
                 .padding()
@@ -209,21 +240,7 @@ struct ChosenRoleView : View {
         }
        
     }
-    
-    enum Specialite : String,CaseIterable{
-        case Dermatology = "Dermatology"
-        case Optometry = "Optometry"
-        case Neurosurgery = "Neurosurgery"
-        case General = "General"
-        case Surgery = "Surgery"
-        case Psychiatry = "Psychiatry"
-        case Ophthalmology = "Ophthalmology"
-        case Virology = "Virology"
-        case Radiology = "Radiology"
-        case Plastic_Surgery = "Plastic Surgery"
-        case Obstetrics = "Obstetrics"
-        case Orthopedics = "Orthopedics"
-    }
+
     
     struct ChosenRoleDoctorView : View {
         @Binding var fullname: String

@@ -21,7 +21,7 @@ struct MainActivityView: View {
                 SignUpView().tag("house.fill")
                 
               
-              ForgetPasswordView().tag("magnifyingglass")
+              UpdateProfileView().tag("magnifyingglass")
                 
                 SignInView().tag("menucard.fill")
 
