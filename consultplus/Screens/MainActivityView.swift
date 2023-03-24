@@ -18,7 +18,7 @@ struct MainActivityView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)){
             
             TabView(selection: $selectedTab){
-                SignUpView().tag("house.fill")
+                UpdateProfileView().tag("house.fill")
                 
               
               UpdateProfileView().tag("magnifyingglass")

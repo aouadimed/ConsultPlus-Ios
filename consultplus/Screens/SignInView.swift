@@ -18,7 +18,7 @@ struct SignInView: View {
     var body: some View {
         NavigationView{
             ZStack(alignment: .top) {
-                NavigationLink(destination: UpdateProfileView().navigationBarBackButtonHidden(true), isActive: $navigateToMainPage) {
+                NavigationLink(destination: MainActivityView().navigationBarBackButtonHidden(true), isActive: $navigateToMainPage) {
         EmptyView()
                 }.navigationBarBackButtonHidden(true)
                 Color(.white).edgesIgnoringSafeArea(.all)
@@ -117,14 +117,24 @@ struct SignInView: View {
                  do {
                      print("sa7a")
                      // Accessing the name and role properties of the UserResponse object
-                     let name = userResponse.name
                      let role = userResponse.role ?? "Unknown"
-                     print("Welcome \(name)! Your role is \(role)")
-                    
+                     let image = userResponse.image ?? "person.fill"
+              
                      let keychain = Keychain(service: "esprit.tn.consultplus")
                      keychain["Email"] = email
-                     keychain["Name"] = name
                      keychain["Role"] = role
+                     
+                     
+                     ApiManager.shareInstance.downloadImage(email: email,imageName: image) { result in
+                         switch result {
+                         case .success(let success):
+                             print("Image downloaded successfully: \(success)")
+                         case .failure(let error):
+                             print("Error downloading image: \(error)")
+                         }
+                     }
+                     
+                     
                      navigateToMainPage = true
                  }
                  

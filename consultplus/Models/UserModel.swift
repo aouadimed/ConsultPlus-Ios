@@ -55,4 +55,27 @@ struct UserModel :Codable {
         self.email = email
         self.password =  password
     }
+    
+    init(name: String, email: String, genders: String, birthdate: String, adresse: String, role: String, firstname: String, lastname: String) {
+        self.name = name
+        self.email = email
+        self.genders = genders
+        self.birthdate = birthdate
+        self.adresse = adresse
+        self.role = role
+        self.firstname = firstname
+        self.lastname = lastname
+    }
+    init(email: String)
+    {
+        self.email = email
+    }
+    
+    
+    init(specialite: String, experience: String, patient: String, description: String) {
+        self.specialite = specialite
+        self.experience = experience
+        self.patient = patient
+        self.description = description
+    }
 }
