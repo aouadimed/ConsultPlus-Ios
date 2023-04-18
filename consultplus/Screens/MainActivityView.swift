@@ -18,15 +18,15 @@ struct MainActivityView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)){
             
             TabView(selection: $selectedTab){
-                UpdateProfileView().tag("house.fill")
+                HomeUIView().tag("house.fill")
                 
               
-              UpdateProfileView().tag("magnifyingglass")
+              DoctorsListUIView().tag("magnifyingglass")
                 
-                SignInView().tag("menucard.fill")
+                UpdateProfileView().tag("menucard.fill")
 
                 
-           }
+            }.edgesIgnoringSafeArea(.all)
             
             
             
@@ -45,8 +45,8 @@ struct MainActivityView: View {
                     
                 }.padding()
                 .background(Color.accentColor)
-                .clipShape(Capsule())
-                .padding()
+                .clipShape(Capsule()).padding()
+                .padding(.bottom,-30)
                 .shadow(color: Color.black.opacity(0.15), radius: 8,x:2 ,y:6)
                 .frame(maxHeight: .infinity,alignment: .bottom)
                 .ignoresSafeArea(.keyboard,edges: .bottom)

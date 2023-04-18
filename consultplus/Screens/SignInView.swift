@@ -106,7 +106,7 @@ struct SignInView: View {
     
     func NavigateToMainPage(){
         
-        let user = UserModel(email: email, password: password)
+        let user = UserModel(email: email.lowercased(), password: password)
         ApiManager.shareInstance.callingLoginApi(Login: user)
         {
             
@@ -121,7 +121,7 @@ struct SignInView: View {
                      let image = userResponse.image ?? "person.fill"
               
                      let keychain = Keychain(service: "esprit.tn.consultplus")
-                     keychain["Email"] = email
+                     keychain["Email"] = email.lowercased()
                      keychain["Role"] = role
                      
                      
@@ -140,7 +140,7 @@ struct SignInView: View {
                  
              case .failure:
                  
-                print("fuck no")
+                print("no")
                  
              default:
                  print("Unexpected result type")

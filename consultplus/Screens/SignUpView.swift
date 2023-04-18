@@ -102,7 +102,7 @@ struct SignUpView: View {
             .navigationDestination(for: String.self){
                 view in
                 if view == "signin"{
-                        SignInView()
+                        SignInView().navigationBarHidden(true)
                 }
             }
         }
@@ -110,7 +110,7 @@ struct SignUpView: View {
     
     func signup(){
         
-        let user = UserModel(name: fullname, email: email, password: password)
+        let user = UserModel(name: fullname.lowercased(), email: email.lowercased(), password: password)
         ApiManager.shareInstance.callingRegisterApi(Register: user)
         {
             

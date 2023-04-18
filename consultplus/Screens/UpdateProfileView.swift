@@ -342,7 +342,8 @@ struct ChosenRoleView : View {
                  case .success:
                      do {
                          print("sa7a")
-
+                         let keychain = Keychain(service: "esprit.tn.consultplus")
+                         keychain["Role"] = "patient"
 
                        //  navigateToMainPage = true
                      }
@@ -445,7 +446,8 @@ struct ChosenRoleView : View {
                  case .success:
                      do {
                          print("sa7a")
-
+                         let keychain = Keychain(service: "esprit.tn.consultplus")
+                         keychain["Role"] = "doctor"
 
                        //  navigateToMainPage = true
                      }
