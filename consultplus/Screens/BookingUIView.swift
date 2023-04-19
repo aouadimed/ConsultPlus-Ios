@@ -7,6 +7,8 @@
 
 import SwiftUI
 import KeychainAccess
+import Combine
+
 
 struct BookingUIView: View {
     let times = [
@@ -25,8 +27,17 @@ struct BookingUIView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    let calendar = Calendar.current
+    let start = Date()
     @State private var name: String = ""
     @State var image: UIImage?
+    @State private var selectedMonthYear = ""
+    @State private var scrollViewGeometry: GeometryProxy?
+     @State private var visibleMonthYears: [String] = []
+    @State private var scrollView: UIScrollView?
+    @State private var scrollViewWidth: CGFloat = 0
+
+
     var body: some View {
         NavigationView{
                 ZStack(alignment: .top) {
@@ -58,30 +69,68 @@ struct BookingUIView: View {
                                     Text("Date")
                                         .fontWeight(.bold)
                                     Spacer()
-                                    Text("Avril")
+                                    Text(self.selectedMonthYear)
                                         .fontWeight(.bold).padding(.trailing,10)
                                 }
                                 .padding(.leading, 10)
-                                
-                                ScrollView(.horizontal) {
-                                    HStack{
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
+                                GeometryReader { geometry in
+                                    ScrollViewReader { proxy in
+                                        ScrollView(.horizontal) {
+                                            HStack {
+                                                ForEach(0..<365, id: \.self) { index in
+                                                    let date = calendar.date(byAdding: .day, value: index, to: start)!
+                                                    CustomView(date: date)
+                                                        .id(formatDate(date: date))
+                                                        .background(GeometryReader { geometry in
+                                                            Color.clear
+                                                                .onAppear {
+                                                                    if shouldPrintMonthYear(proxy: proxy, index: index, geometry: geometry) {
+                                                                        let monthYear = formatDate(date: date)
+                                                                        // Print the current month-year to the console
+                                                                        print(monthYear)
+                                                                        selectedMonthYear = monthYear
+                                                                    }
+                                                                }
+                                                        })
+                                                }
+                                                
+                                            }
+                                            }.onChange(of: scrollView?.contentOffset) { value in
+                                                if let scrollViewContentOffset = value?.x {
+                                                    let relativeOffset = scrollViewContentOffset / scrollViewWidth
+                                                    let currentIndex = Int(round(relativeOffset * 365))
+                                                    let date = calendar.date(byAdding: .day, value: currentIndex, to: start)!
+                                                    let monthYear = formatDate(date: date)
+                                                    // Update the selectedMonthYear variable
+                                                    self.selectedMonthYear = monthYear
+                                                    print(monthYear)
+                                                }
+                                         
 
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
-                                        CustomView(day: "M", date: "29")
+
+
+
+
+                                        }
+                                    }
+                                    .onAppear {
+                                        // Store the geometry of the scroll view in a variable
+                                        self.scrollViewGeometry = geometry
+                                        self.scrollViewWidth = geometry.size.width
 
                                     }
-
-                                    
                                 }
-                                
+
+
+
+
+
+
+
+
+
+
+
                                 Divider().frame(width: 320,height: 2).padding()
                                 HStack {
                                     Text("Time")
@@ -101,7 +150,7 @@ struct BookingUIView: View {
                                     .padding(.horizontal)
                                     .padding(.vertical, 10)
                        
-                                }
+                                }.frame( height: 200)
 
                                 
                                 Button(action: {
@@ -117,7 +166,7 @@ struct BookingUIView: View {
                                         .padding()
                                         .background(Color("AccentColor"))
                                         .cornerRadius(50).padding()
-                                }).padding()
+                                }).padding().padding(.top,-20)
                                 
                                 
                             }
@@ -142,8 +191,24 @@ struct BookingUIView: View {
 
         }.onAppear {
             userdatils()
+
 }
 
+    }
+    func formatDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM, yyyy"
+        return dateFormatter.string(from: date)
+    }
+    func shouldPrintMonthYear(proxy: ScrollViewProxy, index: Int, geometry: GeometryProxy) -> Bool {
+        guard let scrollViewGeometry = scrollViewGeometry else {
+            return false
+        }
+
+        let visibleRect = CGRect(origin: scrollViewGeometry.frame(in: .global).origin, size: scrollViewGeometry.size)
+        let rect = geometry.frame(in: .global)
+        let intersection = visibleRect.intersection(rect)
+        return intersection.width > 0 && intersection.height > 0
     }
     func userdatils(){
         let keychain = Keychain(service: "esprit.tn.consultplus")
@@ -171,6 +236,9 @@ struct BookingUIView: View {
             }
         }
     }
+    
+    
+    
 }
 struct BookingUIView_Previews: PreviewProvider {
     static var previews: some View {
@@ -182,16 +250,24 @@ struct CustomView: View {
     
     let day: String
     let date: String
+
+    init(date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E"
+        self.day = formatter.string(from: date)
+        formatter.dateFormat = "d"
+        self.date = formatter.string(from: date)
+    }
     
     var body: some View {
         VStack(spacing: 12.10) {
-            Text(day)
+            Text(day.prefix(1))
                 .font(.custom("Poppins-Medium", size: 15))
                 .foregroundColor(.accentColor)
             Text(date)
                 .font(.custom("Poppins-Medium", size: 20))
                 .foregroundColor(.black)
-        }
+        }.frame(width: 25, height: 60)
         .padding(.horizontal, 12.10)
         .padding(.vertical, 9.10)
         .background(RoundedRectangle(cornerRadius: 30)
@@ -219,7 +295,7 @@ struct TimeView: View {
             }
             .padding(.vertical, 10.40)
         }
-        .frame(width: 110, height: nil)
+        .frame(width: 110, height: 40)
         .background(
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color.white)
@@ -227,5 +303,21 @@ struct TimeView: View {
         )
         .padding(.horizontal, 10.40)
         .padding(.vertical, 6.50)
+    }
+}
+
+struct ScrollViewReaderHelper: UIViewRepresentable {
+    
+    static let publisher = PassthroughSubject<[CGRect], Never>()
+    
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        let visibleRects = uiView.subviews.map { $0.frame }
+        Self.publisher.send(visibleRects)
     }
 }
