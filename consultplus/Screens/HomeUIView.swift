@@ -11,6 +11,8 @@ import KeychainAccess
 struct HomeUIView: View {
     @State private var name: String = ""
     @State var image: UIImage?
+    @State var specialities: [ApiManager.Speciality] = []
+
     var body: some View {
         NavigationView{
                 ZStack(alignment: .top) {
@@ -43,14 +45,12 @@ struct HomeUIView: View {
 
                             ScrollView(.horizontal) {
                                 HStack {
-                                    MyCardView()
-                                    MyCardView()
-                                    MyCardView()
-                                    MyCardView()
+                                    ForEach(specialities, id: \.self) { speciality in
+                                        MyCardView(speciality: speciality)
+                                    }
                                 }
                             }
                             .frame(height:180)
-                            
                             
                             HStack {
                                 Text("Your appointments")
@@ -93,6 +93,17 @@ struct HomeUIView: View {
 
         }.onAppear {
             userdatils()
+            ApiManager.shareInstance.getSpecialities { result in
+                switch result {
+                case .success(let specialities as [ApiManager.Speciality]):
+                    self.specialities = specialities
+                    print("dzdzdz",self.specialities)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                default:
+                     print("Unexpected result type")
+                }
+            }
 }
 
     }
@@ -163,45 +174,51 @@ struct RoundUserImage: View {
 
 
 struct MyCardView: View {
+    let speciality: ApiManager.Speciality
+
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.clear)
-                .shadow(radius: 0)
-            VStack(spacing: 0) {
-                ZStack {
-                    Rectangle()
-                        .frame(width: 144, height: 171)
-                        .foregroundColor(Color(.lightGray))
-                        .cornerRadius(25)
-                VStack(spacing: 10) {
-                    Circle()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.white)
-                        .padding(.bottom,20)
-                    Text("Dentistry")
-                        .font(.custom("Eastman-Medium", size: 15))
-                        .lineSpacing(-3)
-                        .foregroundColor(.white)
+        NavigationLink(destination: DoctorsListUIView(speciality: speciality.id).navigationBarBackButtonHidden(true)) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.clear)
+                    .shadow(radius: 0)
+                VStack(spacing: 0) {
+                    ZStack {
+                        Rectangle()
+                            .frame(width: 144, height: 171)
+                            .foregroundColor(Color(.lightGray))
+                            .cornerRadius(25)
+                        VStack(spacing: 10) {
+                            Circle()
+                                .frame(width: 60, height: 60)
+                                .foregroundColor(.white)
+                                .padding(.bottom,20)
+                            Text(speciality.id)
+                                .font(.custom("Eastman-Medium", size: 15))
+                                .lineSpacing(-3)
+                                .foregroundColor(.white)
 
-                    HStack(spacing: 3) {
-                        Text("70")
-                            .font(.custom("Roboto-Regular", size: 13))
-                            .lineSpacing(-2)
-                            .foregroundColor(.white)
+                            HStack(spacing: 3) {
+                                Text("\(speciality.doctorsCount)")
+                                    .font(.custom("Roboto-Regular", size: 13))
+                                    .lineSpacing(-2)
+                                    .foregroundColor(.white)
 
-                        Text("doctors")
-                            .font(.custom("Roboto-Regular", size: 13))
-                            .lineSpacing(-2)
-                            .foregroundColor(.white)
+                                Text("doctors")
+                                    .font(.custom("Roboto-Regular", size: 13))
+                                    .lineSpacing(-2)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding(.leading, -50)
                     }
                 }
-                .padding(.leading, -50)
             }
-}
-        }
+        }.navigationBarBackButtonHidden(true)
     }
 }
+
+
 
 struct AppointmentView: View {
     var body: some View {

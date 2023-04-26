@@ -21,7 +21,7 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://192.168.118.151:5000/"
+    let baseUrl = "http://192.168.26.151:5000/"
    
     struct UserResponse: Codable {
         let email: String?
@@ -42,6 +42,7 @@ class ApiManager{
         let image: String?
 
     }
+    
 
     func callingLoginApi(Login: UserModel, completionHandler : @escaping Handler) {
         let headers: HTTPHeaders = [
@@ -299,6 +300,158 @@ class ApiManager{
         
         // Start the download request
         downloadRequest.resume()
+    }
+
+    struct Speciality: Codable, Identifiable, Hashable {
+        let id: String
+        let doctorsCount: Int
+
+        enum CodingKeys: String, CodingKey {
+            case id = "_id"
+            case doctorsCount = "count"
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+            hasher.combine(doctorsCount)
+        }
+
+        static func ==(lhs: Speciality, rhs: Speciality) -> Bool {
+            return lhs.id == rhs.id &&
+                   lhs.doctorsCount == rhs.doctorsCount
+        }
+    }
+
+    
+    func getSpecialities(completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        AF.request(baseUrl+"groupspecialiter", headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let specialities = try decoder.decode([Speciality].self, from: data)
+                    print(specialities)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(specialities))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get specialities")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get specialities")))
+            }
+        }
+    }
+
+    
+    struct Doctor: Codable, Identifiable, Hashable {
+        let id: String
+        let email: String
+        let specialite: String
+        let firstname: String
+        let lastname: String
+        let image: String
+        
+        enum CodingKeys: String, CodingKey {
+            case id = "_id"
+            case email
+            case specialite
+            case firstname
+            case lastname
+            case image
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+            hasher.combine(email)
+            hasher.combine(specialite)
+            hasher.combine(firstname)
+            hasher.combine(lastname)
+            hasher.combine(image)
+        }
+
+        static func ==(lhs: Doctor, rhs: Doctor) -> Bool {
+            return lhs.id == rhs.id &&
+                   lhs.email == rhs.email &&
+                   lhs.specialite == rhs.specialite &&
+                   lhs.firstname == rhs.firstname &&
+                   lhs.lastname == rhs.lastname &&
+                   lhs.image == rhs.image
+        }
+    }
+
+
+    
+    func getDoctors(completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        AF.request(baseUrl+"doctordata", headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let Doctor = try decoder.decode([Doctor].self, from: data)
+                    print(Doctor)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(Doctor))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+            }
+        }
+    }
+    
+    func getDoctorsBySpeciality(speciality: String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        let parameters = [        "specialite": speciality    ]
+        
+        AF.request(baseUrl+"recherche/specialite", parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let doctors = try decoder.decode([Doctor].self, from: data)
+                    print(doctors)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(doctors))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+            }
+        }
     }
 
 

@@ -20,6 +20,8 @@
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
 		54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */; };
 		54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */; };
+		54E1A0DA29F89A7C00823AE2 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 54E1A0D929F89A7C00823AE2 /* URLImage */; };
+		54E1A0DC29F89A7C00823AE2 /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = 54E1A0DB29F89A7C00823AE2 /* URLImageStore */; };
 		54EA463D29EE17400052527C /* HomeUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EA463C29EE17400052527C /* HomeUIView.swift */; };
 		54EA463F29EE37F20052527C /* DoctorsListUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EA463E29EE37F20052527C /* DoctorsListUIView.swift */; };
 		54EA464129EE3D1F0052527C /* DoctorProfilUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EA464029EE3D1F0052527C /* DoctorProfilUIView.swift */; };
@@ -86,6 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54E1A0DA29F89A7C00823AE2 /* URLImage in Frameworks */,
+				54E1A0DC29F89A7C00823AE2 /* URLImageStore in Frameworks */,
 				63F2A9E39DEE2077D651358F /* Pods_consultplus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +248,10 @@
 			dependencies = (
 			);
 			name = consultplus;
+			packageProductDependencies = (
+				54E1A0D929F89A7C00823AE2 /* URLImage */,
+				54E1A0DB29F89A7C00823AE2 /* URLImageStore */,
+			);
 			productName = consultplus;
 			productReference = 5410043629C889080012724B /* consultplus.app */;
 			productType = "com.apple.product-type.application";
@@ -319,6 +327,9 @@
 				Base,
 			);
 			mainGroup = 5410042D29C889080012724B;
+			packageReferences = (
+				54E1A0D829F89A7C00823AE2 /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = 5410043729C889080012724B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -803,6 +814,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		54E1A0D829F89A7C00823AE2 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54E1A0D929F89A7C00823AE2 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54E1A0D829F89A7C00823AE2 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		54E1A0DB29F89A7C00823AE2 /* URLImageStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54E1A0D829F89A7C00823AE2 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImageStore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5410042E29C889080012724B /* Project object */;
 }

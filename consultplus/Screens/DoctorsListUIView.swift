@@ -7,10 +7,18 @@
 
 import SwiftUI
 import KeychainAccess
+import URLImage
 
 struct DoctorsListUIView: View {
+    let specialite: String?
     @State private var name: String = ""
     @State var image: UIImage?
+    @State var doctors: [ApiManager.Doctor] = []
+    @State private var searchText: String = ""
+
+    init(speciality: String? = nil) {
+        self.specialite = speciality
+    }
     var body: some View {
         NavigationView{
                 ZStack(alignment: .top) {
@@ -34,8 +42,8 @@ struct DoctorsListUIView: View {
                         }
                         VStack(spacing:0 ){
 
-                            SearchBarView().padding()
-                            
+                            SearchBarView(searchText: $searchText).padding()
+
                             HStack {
                                 Text("Our Doctors")
                                     .fontWeight(.bold)
@@ -45,18 +53,22 @@ struct DoctorsListUIView: View {
                             .padding(.leading, 10).padding(.top,10)
                             
                             ScrollView(.vertical) {
-                                DoctorCardView()
-                                DoctorCardView()
-
-                                DoctorCardView()
-                                DoctorCardView()
-                                DoctorCardView()
-                                DoctorCardView()
-
-
-
-                                
+                                if searchText.isEmpty {
+                                    ForEach(doctors, id: \.self) { doctor in
+                                        DoctorCardView(doctordata: doctor)
+                                    }
+                                } else {
+                                    let filteredDoctors = doctors.filter { $0.firstname.lowercased().contains(searchText.lowercased()) || $0.lastname.lowercased().contains(searchText.lowercased()) || $0.specialite.lowercased().contains(searchText.lowercased()) }
+                                    if filteredDoctors.isEmpty {
+                                        Text("No doctors found").padding().padding(.top,56)
+                                    } else {
+                                        ForEach(filteredDoctors, id: \.self) { doctor in
+                                            DoctorCardView(doctordata: doctor)
+                                        }
+                                    }
+                                }
                             }
+
                             
                             
                             
@@ -81,9 +93,35 @@ struct DoctorsListUIView: View {
 
         }.onAppear {
             userdatils()
+            if let specialite = specialite, !specialite.isEmpty {
+                ApiManager.shareInstance.getDoctorsBySpeciality(speciality: specialite) { result in
+                    switch result {
+                    case .success(let doctor as [ApiManager.Doctor]):
+                        self.doctors = doctor
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    default:
+                        print("Unexpected result type")
+                    }
+                }
+            } else {
+                ApiManager.shareInstance.getDoctors { result in
+                    switch result {
+                    case .success(let doctor as [ApiManager.Doctor]):
+                        self.doctors = doctor
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    default:
+                        print("Unexpected result type")
+                    }
+                }
+            }
+
+
 }
 
     }
+    
     func userdatils(){
         let keychain = Keychain(service: "esprit.tn.consultplus")
         let user = UserModel(email: keychain["Email"])
@@ -119,6 +157,8 @@ struct DoctorsListUIView_Previews: PreviewProvider {
 }
 
 struct DoctorCardView: View {
+    let doctordata: ApiManager.Doctor
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
@@ -130,9 +170,11 @@ struct DoctorCardView: View {
                     .shadow(radius: 5)
                     .frame(width: 60, height: 60)
                     .overlay(
-                        Image("img_profil")
-                            .resizable()
-                            .frame(width: 50, height: 50)
+                        URLImage(URL(string: doctordata.image)!) { image in
+                            image
+                                .resizable()
+                                .frame(width: 60, height: 60)
+                        }.clipShape(Circle())
                     )
                     .padding(.leading, 30).padding(.trailing,25)
                 VStack(alignment: .leading, spacing: 2) {
@@ -140,14 +182,14 @@ struct DoctorCardView: View {
                         Text("Dr.")
                             .font(.custom("eastman_medium", size: 15))
                             .foregroundColor(.black)
-                        Text("Mohamed")
+                        Text(doctordata.firstname+" ")
                             .font(.custom("eastman_medium", size: 15))
                             .foregroundColor(.black)
-                        Text("aouadi")
+                        Text(doctordata.lastname)
                             .font(.custom("eastman_medium", size: 15))
                             .foregroundColor(.black)
                     }
-                    Text("Dermatology")
+                    Text(doctordata.specialite)
                         .font(.custom("eastman_medium", size: 15))
                         .foregroundColor(.black)
                         .lineSpacing(-3)
@@ -164,7 +206,7 @@ struct DoctorCardView: View {
     }
 }
 struct SearchBarView: View {
-    @State private var searchText: String = ""
+    @Binding var searchText: String
 
     var body: some View {
         HStack {

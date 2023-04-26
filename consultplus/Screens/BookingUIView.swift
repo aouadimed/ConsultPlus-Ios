@@ -36,8 +36,16 @@ struct BookingUIView: View {
      @State private var visibleMonthYears: [String] = []
     @State private var scrollView: UIScrollView?
     @State private var scrollViewWidth: CGFloat = 0
-
-
+/*
+    var showIndicators :Bool
+    var axis 
+    init(@ViewBuilder content: ()->Content,offset: Binding<CGFloat>,showIndicators: Bool,axis:Axis.Set){
+        self.content = content()
+        self._offset = offset
+        self.showIndicators =showIndicators
+        self.axis = axis
+    }
+*/
     var body: some View {
         NavigationView{
                 ZStack(alignment: .top) {
@@ -96,6 +104,7 @@ struct BookingUIView: View {
                                                 
                                             }
                                             }.onChange(of: scrollView?.contentOffset) { value in
+                                             print("value")
                                                 if let scrollViewContentOffset = value?.x {
                                                     let relativeOffset = scrollViewContentOffset / scrollViewWidth
                                                     let currentIndex = Int(round(relativeOffset * 365))

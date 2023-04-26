@@ -32,6 +32,7 @@ struct MainActivityView: View {
             
             
             
+            
         
             HStack(spacing : 0){
                     ForEach(tabs,id: \.self){
