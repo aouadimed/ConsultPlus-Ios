@@ -91,7 +91,7 @@ struct DoctorsListUIView: View {
                 }.edgesIgnoringSafeArea(.bottom)
             
 
-        }.onAppear {
+        }.edgesIgnoringSafeArea(.bottom).onAppear {
             userdatils()
             if let specialite = specialite, !specialite.isEmpty {
                 ApiManager.shareInstance.getDoctorsBySpeciality(speciality: specialite) { result in
@@ -115,6 +115,7 @@ struct DoctorsListUIView: View {
                         print("Unexpected result type")
                     }
                 }
+                
             }
 
 
@@ -158,51 +159,52 @@ struct DoctorsListUIView_Previews: PreviewProvider {
 
 struct DoctorCardView: View {
     let doctordata: ApiManager.Doctor
-
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.white)
-                .shadow(radius: 10)
-            HStack {
-                Circle()
+        NavigationLink(destination: DoctorProfilUIView(doctorEmail: doctordata.email)) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white)
-                    .shadow(radius: 5)
-                    .frame(width: 60, height: 60)
-                    .overlay(
-                        URLImage(URL(string: doctordata.image)!) { image in
-                            image
-                                .resizable()
-                                .frame(width: 60, height: 60)
-                        }.clipShape(Circle())
-                    )
-                    .padding(.leading, 30).padding(.trailing,25)
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(spacing: 0) {
-                        Text("Dr.")
+                    .shadow(radius: 10)
+                HStack {
+                    Circle()
+                        .fill(Color.white)
+                        .shadow(radius: 5)
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            URLImage(URL(string: doctordata.image)!) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 60, height: 60)
+                            }.clipShape(Circle())
+                        )
+                        .padding(.leading, 30).padding(.trailing,25)
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 0) {
+                            Text("Dr.")
+                                .font(.custom("eastman_medium", size: 15))
+                                .foregroundColor(.black)
+                            Text(doctordata.firstname+" ")
+                                .font(.custom("eastman_medium", size: 15))
+                                .foregroundColor(.black)
+                            Text(doctordata.lastname)
+                                .font(.custom("eastman_medium", size: 15))
+                                .foregroundColor(.black)
+                        }
+                        Text(doctordata.specialite)
                             .font(.custom("eastman_medium", size: 15))
                             .foregroundColor(.black)
-                        Text(doctordata.firstname+" ")
-                            .font(.custom("eastman_medium", size: 15))
-                            .foregroundColor(.black)
-                        Text(doctordata.lastname)
-                            .font(.custom("eastman_medium", size: 15))
-                            .foregroundColor(.black)
+                            .lineSpacing(-3)
                     }
-                    Text(doctordata.specialite)
-                        .font(.custom("eastman_medium", size: 15))
-                        .foregroundColor(.black)
-                        .lineSpacing(-3)
+                    Spacer()
+                    Image("right_arrow")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .padding(.leading, 10)
+                        .padding(.top, 10)
                 }
-                Spacer()
-                Image("right_arrow")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .padding(.leading, 10)
-                    .padding(.top, 10)
-            }
-            .frame(width: 350, height: 90)
-        }.padding()
+                .frame(width: 350, height: 90)
+            }.padding()
+        }
     }
 }
 struct SearchBarView: View {

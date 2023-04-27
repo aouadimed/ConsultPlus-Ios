@@ -12,9 +12,13 @@ struct HomeUIView: View {
     @State private var name: String = ""
     @State var image: UIImage?
     @State var specialities: [ApiManager.Speciality] = []
+    @State  var patientId: String? = ""
+    @State var appointments: [PatientBooking] = []
+    @State private var showingConfirmationDialog = false
+
 
     var body: some View {
-        NavigationView{
+        NavigationStack{
                 ZStack(alignment: .top) {
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
@@ -62,11 +66,10 @@ struct HomeUIView: View {
                             
                             ScrollView(.vertical) {
                                 
-                                    AppointmentView()
-                                    AppointmentView()
-                                    AppointmentView()
-                                
-
+                               
+                                ForEach(appointments, id: \.self) { appointment in
+                                    AppointmentView(data: appointment,showingConfirmationDialog: $showingConfirmationDialog)
+                                }
                                 
                             }
                             
@@ -104,6 +107,10 @@ struct HomeUIView: View {
                      print("Unexpected result type")
                 }
             }
+        
+
+            
+            
 }
 
     }
@@ -123,6 +130,8 @@ struct HomeUIView: View {
                     let fileUrl = directoryUrl.appendingPathComponent(filename)
                     let imageData = try Data(contentsOf: fileUrl)
                     self.image = UIImage(data: imageData)
+                    self.patientId = userResponse.id
+                    getappointments()
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -133,6 +142,21 @@ struct HomeUIView: View {
             }
         }
     }
+    
+    func getappointments(){
+        ApiManager.shareInstance.getPatientAppointments(patientId: self.patientId!) { result in
+            switch result {
+            case .success(let PatientBooking as [PatientBooking]):
+                self.appointments = PatientBooking
+            case .failure(let error):
+                print(error.localizedDescription)
+            default:
+                print("Unexpected result type")
+            }
+        }
+    }
+    
+
 }
 
 struct HomeUIView_Previews: PreviewProvider {
@@ -175,9 +199,10 @@ struct RoundUserImage: View {
 
 struct MyCardView: View {
     let speciality: ApiManager.Speciality
+    @State private var isPresented = false
 
     var body: some View {
-        NavigationLink(destination: DoctorsListUIView(speciality: speciality.id).navigationBarBackButtonHidden(true)) {
+        Button(action: { isPresented = true }) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.clear)
@@ -214,13 +239,20 @@ struct MyCardView: View {
                     }
                 }
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .sheet(isPresented: $isPresented) {
+            DoctorsListUIView(speciality: speciality.id)
+        }
     }
 }
 
 
 
+
 struct AppointmentView: View {
+    let data: PatientBooking
+
+    @Binding var showingConfirmationDialog : Bool
     var body: some View {
         VStack(spacing: 3) {
             HStack {
@@ -229,46 +261,75 @@ struct AppointmentView: View {
                         .font(.custom("Eastman-Medium", size: 15))
                         .foregroundColor(.black)
                     HStack(spacing: 6) {
-                        Text("2022-12-22")
+                        Text(data.date)
                             .font(.custom("Poppins", size: 15))
                             .lineSpacing(-3)
                             .foregroundColor(.black)
-                        Text("11:00")
+                        Text(data.time)
                             .font(.custom("Poppins", size: 15))
                             .lineSpacing(-3)
                             .foregroundColor(.black)
                     }
-                    HStack {
+                    HStack(spacing: 0){
                         Text("Dr.")
                             .font(.custom("Poppins-SemiBold", size: 15))
                             .foregroundColor(.black)
-                        Text("Mohamed")
+                        Text(data.doctor.firstname.capitalized+" ")
                             .font(.custom("Poppins-SemiBold", size: 15))
                             .foregroundColor(.black)
-                        Text("aouadi")
+                        Text(data.doctor.lastname.capitalized)
                             .font(.custom("Poppins-SemiBold", size: 15))
                             .foregroundColor(.black)
                     }
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 3) {
-                    Button(action: {}) {
-                        Text("Cancel")
-                            .font(.custom("Roboto-Regular", size: 8))
-                            .frame(width: 50, height: 20)
-                            .background(Color(red: 1.0, green: 1.0, blue: 1.0))
-                            .background(RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1))
+                VStack {
+                    
+                    if(data.status == 0){
+                        
+                        VStack(spacing: 2) {
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
+                            Text("Pending for confirmation")
+                                .font(.custom("Poppins", size: 10))
+                                .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
+                        }
+                        
+                        
+                    } else {
+                        
+                        Button(action: {
+                            showingConfirmationDialog = true
+                            
+                        }) {
+                            Text("Cancel")
+                                .font(.custom("Roboto-Regular", size: 8))
+                                .frame(width: 70, height: 30)
+                                .foregroundColor(.white)
+                                .background(Color.red)
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.red, lineWidth: 1)
+                                ).padding(.trailing,20)
+                        }.alert(isPresented: $showingConfirmationDialog) {
+                            Alert(
+                                title: Text("Cancel booking"),
+                                message: Text("Are you sure you want to cancel this appointment?"),
+                                primaryButton: .default(Text("Book")) {
+                                    deleteappointments(patient : data.id)
+                                },
+                                secondaryButton: .cancel()
+                            )
+                        }
+                        
+                        
                     }
-                    VStack(spacing: 2) {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
-                        Text("Pending for confirmation")
-                            .font(.custom("Poppins", size: 10))
-                            .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
-                    }
+
+
                 }
             }
 
@@ -276,5 +337,24 @@ struct AppointmentView: View {
         .padding()
         .background(RoundedRectangle(cornerRadius:15).foregroundColor(.white))
         .shadow(radius: 10).padding().padding(.bottom,-20)
+    }
+    func deleteappointments(patient : String){
+        ApiManager.shareInstance.deleteApponitment(bookId: patient) {
+            (result) in
+             switch result
+             {
+             case .success:
+                 do {
+               
+                     print("sa7a")
+                 }
+                 
+             case .failure:
+                 
+                print("no")
+
+             }
+            
+        }
     }
 }

@@ -126,7 +126,7 @@ struct SignUpView: View {
                  
              case .failure:
                  
-                print("fuck no")
+                print("no")
 
              }
             

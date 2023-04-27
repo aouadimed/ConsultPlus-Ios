@@ -10,7 +10,7 @@ import SwiftUI
 struct MainActivityView: View {
     @State var selectedTab = "home"
     @State var title = "House"
-    
+
     var body: some View {
         
      

@@ -11,16 +11,30 @@ import MapKit
 
 
 struct DoctorProfilUIView: View {
-    @State private var name: String = ""
+    let doctorEmail: String?
+    @State  var name: String = ""
     @State var image: UIImage?
     @State var numPatients: Double = 1.4
     @State var experience: Int = 9
     @State var rating: Double = 4.0
-    @State private var description: String = "dddddddddd"
+    @State  var description: String = "I m at Rue Abderrahmene El Ghafeki, Ariana"
+    @State var  firstname : String? = ""
+    @State  var lastname : String? = ""
+    @State  var doctorimage :UIImage?
+    @State  var adresse: String = "Rue Abderrahmene El Ghafeki, Ariana"
+    @State  var specialite: String? = ""
+    @State  var navigateToBookinngPage = false
 
+    init(doctorEmail: String? = nil) {
+        self.doctorEmail = doctorEmail
+    }
     var body: some View {
         NavigationView{
+
                 ZStack(alignment: .top) {
+                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail).navigationBarBackButtonHidden(true), isActive: $navigateToBookinngPage) {
+            EmptyView()
+                    }.navigationBarBackButtonHidden(true)
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
                         HStack(alignment: .top){
@@ -29,7 +43,7 @@ struct DoctorProfilUIView: View {
                             Spacer()
                             VStack{
                                 Text("Hello_").fixedSize()
-                                Text(self.name)
+                                Text(self.name.capitalized)
                             }.frame(height: 50).fixedSize()
                             Spacer()
                             ZStack{
@@ -43,7 +57,7 @@ struct DoctorProfilUIView: View {
                         ZStack{
                             Image("Rectangle ili wset").resizable().edgesIgnoringSafeArea(.bottom)
                             VStack(spacing:0 ){
-                                ProfileCardView().padding()
+                                ProfileCardView(firstname: self.$firstname, lastname: self.$lastname, doctorimage: self.$doctorimage, specialite: self.$specialite).padding()
                                 VStack(spacing: 30) {
                                     HStack(spacing: 55) {
                                         Text("Patients")
@@ -63,17 +77,17 @@ struct DoctorProfilUIView: View {
                                     }
                                     
                                     HStack(spacing: 55) {
-                                        Text("\(numPatients, specifier: "%.1f") K")
+                                        Text("\(self.numPatients, specifier: "%.1f") K")
                                             .font(.custom("Roboto Regular", size: 18))
                                             .foregroundColor(Color.black)
                                             .frame(width: 100)
                                         
-                                        Text("\(experience) yr")
+                                        Text("\(self.experience) yr")
                                             .font(.custom("Roboto Regular", size: 18))
                                             .foregroundColor(Color.black)
                                             .frame(width: 100)
                                         
-                                        Text("\(rating, specifier: "%.1f")")
+                                        Text("\(self.rating, specifier: "%.1f")")
                                             .font(.custom("Roboto Regular", size: 18))
                                             .foregroundColor(Color.black)
                                             .frame(width: 70)
@@ -91,7 +105,7 @@ struct DoctorProfilUIView: View {
                                 .padding(.leading, 10).padding(.top,20)
                                 
                                 HStack {
-                                    Text(description)
+                                    Text(self.description)
                                         .fontWeight(.regular)
                                         .padding(.bottom, 10)
                                     Spacer()
@@ -109,7 +123,7 @@ struct DoctorProfilUIView: View {
                                     RoundedRectangle(cornerRadius: 30)
                                         .fill(Color.white)
                                         .shadow(radius: 30)
-                                    MapCardView(address: "Rue Abderrahmene El Ghafeki, Ariana") .cornerRadius(30)
+                                    MapCardView(address: self.adresse) .cornerRadius(30)
                                         .frame(height: 200)
                                 }
                                 .frame(width: UIScreen.main.bounds.width - 40, height: 160)
@@ -117,7 +131,7 @@ struct DoctorProfilUIView: View {
                                     .stroke(Color.gray.opacity(0.5), lineWidth: 1)).padding().padding(.top,20)
                                 
                             
-                                AppointmentCardView().padding(.top,40).padding(.bottom,40)
+                                AppointmentCardView(navigateToBookinngPage: $navigateToBookinngPage).padding(.top,40).padding(.bottom,60)
                                 
                      
                                 
@@ -145,13 +159,15 @@ struct DoctorProfilUIView: View {
             
 
         }.onAppear {
+            DocotrInformation()
             userdatils()
-}
+           
 
+}
     }
     func userdatils(){
         let keychain = Keychain(service: "esprit.tn.consultplus")
-        let user = UserModel(email: keychain["Email"])
+        let user = UserModel(email:  keychain["Email"])
         ApiManager.shareInstance.callingUserDataApi(UserData: user) { result in
             switch result {
             case .success(let userResponse as ApiManager.UserResponse):
@@ -175,6 +191,52 @@ struct DoctorProfilUIView: View {
             }
         }
     }
+    func DocotrInformation(){
+        let user = UserModel(email: doctorEmail)
+        ApiManager.shareInstance.callingUserDataApi(UserData: user) { result in
+            switch result {
+            case .success(let userResponse as ApiManager.UserResponse):
+                do {
+                    print("sa7a")
+                    // Accessing the name and role properties of the UserResponse object
+                    self.firstname = userResponse.firstname ?? ""
+                    self.lastname = userResponse.lastname ?? ""
+                    self.specialite = userResponse.specialite ?? ""
+                    let filename = userResponse.image ?? "person.fill"
+                    let documentsUrl = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                    let directoryUrl = documentsUrl.appendingPathComponent("ConsultPlus")
+                    let fileUrl = directoryUrl.appendingPathComponent(filename)
+                    let imageData = try Data(contentsOf: fileUrl)
+                    self.doctorimage = UIImage(data: imageData)
+                    if let patientCount = userResponse.patient {
+                        let formatter = NumberFormatter()
+                        formatter.numberStyle = .decimal
+                        formatter.maximumFractionDigits = 1
+                        
+                        if patientCount >= 1000 {
+                            let patientCountInK = Double(patientCount) / 1000
+                            if let formattedPatientCount = formatter.string(from: NSNumber(value: patientCountInK)) {
+                                self.numPatients = Double(formattedPatientCount.replacingOccurrences(of: ",", with: ""))!
+                            }
+                        } else {
+                            self.numPatients = Double(patientCount)
+                        }
+                    }
+
+
+                    self.experience = userResponse.experience ?? Int(2)
+                    self.adresse = userResponse.adresse ?? "Rue Abderrahmene El Ghafeki, Ariana"
+                    self.description = userResponse.description ?? "Rue Abderrahmene El Ghafeki, Ariana"
+                } catch {
+                    print(error.localizedDescription)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            default:
+                print("Unexpected result type")
+            }
+        }
+    }
 }
 
 struct DoctorProfilUIView_Previews: PreviewProvider {
@@ -185,39 +247,47 @@ struct DoctorProfilUIView_Previews: PreviewProvider {
 
 
 struct ProfileCardView: View {
+    @Binding var firstname : String?
+    @Binding var lastname : String?
+    @Binding var doctorimage : UIImage?
+    @Binding var specialite : String?
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 30)
                 .frame(width: 340, height: 180)
                 .foregroundColor(Color.white)
                 .shadow(radius: 5)
-            
+
             HStack {
                 RoundedRectangle(cornerRadius: 150)
                     .frame(width: 150, height: 150)
                     .foregroundColor(Color.white)
                     .shadow(radius: 30)
                     .overlay(
-                        Image("img")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                        doctorimage.map { image in
+                            Image(uiImage: image)
+                                .resizable().frame(width: 150, height: 150)
+                                .aspectRatio(contentMode: .fit).clipShape(Circle())
+
+                        }
                     )
-                
+
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Text("Dr.")
                             .font(.custom("Poppins-Bold", size: 20))
                             .foregroundColor(Color.black)
-                        Text("Mohamed")
+                        Text(firstname ?? "")
                             .font(.custom("Poppins-Bold", size: 18))
                             .foregroundColor(Color.black)
                     }
-                    Text("Aouadi")
+                    Text(lastname ?? "")
                         .font(.custom("Poppins-Bold", size: 20))
                         .foregroundColor(Color.black)
-                    
+
                     HStack {
-                        Text("Dermatology")
+                        Text(specialite ?? "")
                             .font(.custom("Poppins", size: 20))
                             .foregroundColor(Color.black)
                     }
@@ -225,13 +295,14 @@ struct ProfileCardView: View {
                 .padding(.leading, 20)
             }
             .frame(width: 300)
-         
         }
     }
 }
 
 
+
 struct AppointmentCardView: View {
+    @Binding var navigateToBookinngPage : Bool
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 30)
@@ -250,7 +321,7 @@ struct AppointmentCardView: View {
                         .frame(width: 160, alignment: .leading)
 
                     Button(action: {
-                        // Handle button tap
+                        navigateToBookinngPage = true
                     }) {
                         Text("Book Appointment")
                             .font(.custom("Roboto-Regular", size: 8))

@@ -21,9 +21,28 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://192.168.26.151:5000/"
+    let baseUrl = "http://192.168.36.151:5000/"
    
     struct UserResponse: Codable {
+        let email: String?
+        let user: String?
+        let role: String?
+        let id: String?
+        let name: String?
+        let password: String?
+        let genders: String?
+        let birthdate: String?
+        let adresse: String?
+        let firstname: String?
+        let lastname: String?
+        let specialite: String?
+        let experience: Int?
+        let patient: Int?
+        let description: String?
+        let image: String?
+
+    }
+    struct DoctorResponse: Codable {
         let email: String?
         let user: String?
         let role: String?
@@ -454,7 +473,105 @@ class ApiManager{
         }
     }
 
-
+    func callingBookingApi(Booking: Booking, completionHandler : @escaping Handler)
+    {
+        let headers: HTTPHeaders = [
+            .contentType("application/json")
+        ]
+        
+        AF.request(baseUrl+"addbooking", method: .post, parameters: Booking, encoder: JSONParameterEncoder.default, headers: headers ).response{
+            response in debugPrint(response)
+            
+            switch response.result{
+            case .success(let data):
+               do {
+                   let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                   print(json)
+                   
+                   if response.response?.statusCode == 200{
+                       completionHandler(.success(json))
+                   }
+                   else {
+                       completionHandler(.failure(.custom(message: "error")))
+                   }
+                
+               }catch{
+                   print(error.localizedDescription)
+                   completionHandler(.failure(.custom(message: "Please try again")))
+                   
+               }
+            case .failure(let err) :
+                print(err.localizedDescription)
+                
+            }
+        }
+    }
+    
+    func getPatientAppointments(patientId: String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        let parameters = [        "patient": patientId    ]
+        
+        AF.request(baseUrl+"recherche/bookingforpatient", parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let PatientBookings = try decoder.decode([PatientBooking].self, from: data)
+                    print(PatientBookings)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(PatientBookings))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get PatientBookingss")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+            }
+        }
+    }
+    
+    func deleteApponitment(bookId: String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        let parameters = [        "id": bookId    ]
+        
+        AF.request(baseUrl+"deletebooking", parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result{
+            case .success(let data):
+               do {
+                   let json = try JSONSerialization.jsonObject(with: data, options: [])
+                   print(json)
+                   
+                   if response.response?.statusCode == 200{
+                       completionHandler(.success(json))
+                   }
+                   else {
+                       completionHandler(.failure(.custom(message: "erreur")))
+                   }
+                
+               }catch{
+                   print(error.localizedDescription)
+                   completionHandler(.failure(.custom(message: "Please try again")))
+                   
+               }
+            case .failure(let err) :
+                print(err.localizedDescription)
+                
+            }
+        }
+    }
+    
 
 }
 
