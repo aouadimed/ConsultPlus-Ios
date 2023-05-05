@@ -15,15 +15,14 @@ struct ContentView: View {
       
      
             MainActivityView()
-
-        
-
-        
+            //SignUpView()
+    
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.locale, Locale(identifier: "French"))
     }
 }

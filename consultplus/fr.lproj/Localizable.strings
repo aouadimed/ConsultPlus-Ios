@@ -1,0 +1,65 @@
+/* 
+  Localizable.strings
+  consultplus
+
+  Created by Mohamed Aouadi on 5/5/2023.
+  
+*/
+"Welcome back" = "Bienvenue de retour";
+"Enter your email" = "Entrez votre adresse e-mail";
+"Enter your password" = "Entrez votre mot de passe";
+"Forget Password" = "Mot de passe oublié";
+"Sign In" = "Se connecter";
+"Don't have an account ? " = "Vous n'avez pas de compte";
+"Sign Up" = "S'inscrire";
+"Register with us" = "Inscrivez-vous avec nous";
+"Your information is safe with us" = "Vos informations sont en sécurité avec nous";
+"Enter your full name" = "Entrez votre nom complet";
+"Enter your E-mail" = "Entrez votre adresse e-mail";
+"Enter your Password" = "Entrez votre mot de passe";
+"Confirm Password" = "Confirmez votre mot de passe";
+"Sing up" = "S'inscrire";
+"Already have an account ? " = "Vous avez déjà un compte";
+"E-mail verification" = "Vérification d'email";
+"Enter your e-mail" = "Entrez votre adresse e-mail";
+"Get Link" = "Obtenir le lien";
+"Hello_" = "Bonjour";
+"Most Popular" = "Le plus populaire";
+"Your appointments" = "Votre rendez-vous";
+"Search by doctors or diseases" = "Recherche par médecins ou maladies";
+"Our Doctors" = "Nos médecins";
+"Patients" = "Patients";
+"Experience" = "Expérience";
+"Rating" = "Évaluation";
+"About" = "À propos";
+"Location" = "Emplacement";
+"Instant appointment" = "Rendez-vous instantané";
+"BOOK APPOINTMENT" = "Prendre rendez-vous";
+"Book Appointment" = "Prendre rendez-vous";
+"Date" = "Date";
+"Time" = "Heure";
+"Male" = "Masculin";
+"Female" = "Féminin";
+"Birthday" = "Date de naissance";
+"Enter your address" = "Entrez votre adresse";
+"Save" = "Enregistrer";
+"Patient" = "Patient";
+"Doctor" = "Médecin";
+"Your specialty" = "Votre spécialité";
+"Dermatology" = "Dermatologie";
+"Optometry" = "Optométrie";
+"Neurosurgery" = "Neurochirurgie";
+"General surgery" = "Chirurgie générale";
+"Psychiatry" = "Psychiatrie";
+"Ophthalmology" = "Ophtalmologie";
+"Virology" = "Virologie";
+"Radiology" = "Radiologie";
+"Plastic surgery" = "Chirurgie plastique";
+"Obstetrics" = "Obstétrique";
+"Orthopaedics" = "Orthopédie";
+"How many years of practice" = "Combien d'années de pratique";
+"How many patients do you have" = "Combien de patients avez-vous";
+"Description" = "Description";
+"Appointment Date:" = "Date de Rendez-vous";
+"Pending for confirmation" = "Attend pour la confirmation";
+

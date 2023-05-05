@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  consultplus
+
+  Created by Mohamed Aouadi on 5/5/2023.
+  
+*/
+"Welcome back" = "Welcome back";
+"Enter your email" = "Enter your email address";
+"Enter your password" = "Enter your password";
+"Forget password" = "Forget password";
+"Sign in" = "Sign in";
+"Don’t have an account" = "Don’t have an account";
+"Sign up" = "Sign up";
+"Register with us" = "Register with us";
+"Your information is safe with us" = "Your information is safe with us";
+"Enter your full name" = "Enter your full name";
+"Enter your E-mail" = "Enter your email address";
+"Enter your Password" = "Enter your password";
+"Confirm password" = "Confirm password";
+"Sing up" = "Sign up";
+"Already have an account" = "Already have an account";
+"E-mail verification" = "E-mail verification";
+"Enter your e-mail" = "Enter your email address";
+"Get link" = "Get link";
+"Hello" = "Hello";
+"Most popular" = "Most popular";
+"Your appointment" = "Your appointment";
+"Search by doctors or diseases" = "Search by doctors or diseases";
+"Our Doctors" = "Our Doctors";
+"Patients" = "Patients";
+"Experience" = "Experience";
+"Rating" = "Rating";
+"About" = "About";
+"Location" = "Location";
+"Instant appointment" = "Instant appointment";
+"Book Appointment" = "Book appointment";
+"Date" = "Date";
+"Time" = "Time";
+"Male" = "Male";
+"Female" = "Female";
+"Birthday" = "Birthday";
+"Enter your address" = "Enter your address";
+"Save" = "Save";
+"Patient" = "Patient";
+"Doctor" = "Doctor";
+"Your specialty" = "Your specialty";
+"Dermatology" = "Dermatology";
+"Optometry" = "Optometry";
+"Neurosurgery" = "Neurosurgery";
+"General surgery" = "General surgery";
+"Psychiatry" = "Psychiatry";
+"Ophthalmology" = "Ophthalmology";
+"Virology" = "Virology";
+"Radiology" = "Radiology";
+"Plastic surgery" = "Plastic surgery";
+"Obstetrics" = "Obstetrics";
+"Orthopaedics" = "Orthopaedics";
+"How many years of practice" = "How many years of practice";
+"How many patients do you have" = "How many patients do you have";
+"Description" = "Description";
+"Appointment Date" = "Appointment Date";
+"Pending for confirmation" = "Pending for confirmation";

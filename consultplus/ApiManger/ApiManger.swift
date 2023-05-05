@@ -21,7 +21,7 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://192.168.36.151:5000/"
+    let baseUrl = "http://172.20.10.8:5000/"
    
     struct UserResponse: Codable {
         let email: String?

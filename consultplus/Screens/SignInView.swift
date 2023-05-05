@@ -52,7 +52,7 @@ struct SignInView: View {
 
                     NavigationLink(destination: ForgetPasswordView(), label:
                                     {
-                        Text("Forget Pasword").foregroundColor(Color("AccentColor"))
+                        Text("Forget Password").foregroundColor(Color("AccentColor"))
                     }
                     
                     
@@ -159,6 +159,7 @@ struct SignInView: View {
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
         SignInView()
+        
     }
 }
 

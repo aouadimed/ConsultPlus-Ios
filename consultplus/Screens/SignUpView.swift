@@ -80,7 +80,7 @@ struct SignUpView: View {
 
                     
                     HStack{
-                        Text("Aleardy have an account ? ")
+                        Text("Already have an account ? ")
                         NavigationLink(destination: SignInView().navigationBarHidden(true), label:
                                         {
                             Text("Sign in").foregroundColor(Color("AccentColor"))

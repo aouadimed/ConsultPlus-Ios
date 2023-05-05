@@ -32,9 +32,11 @@ struct HomeUIView: View {
                             }.frame(height: 50).fixedSize()
                             Spacer()
                             ZStack{
+                                
                                 Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
                                 RoundUserImage(image: self.$image).padding(EdgeInsets(top:0,leading:20,bottom: 20,trailing: 0))
                             }
+                            
 
                            
                         }
@@ -71,7 +73,7 @@ struct HomeUIView: View {
                                     AppointmentView(data: appointment,showingConfirmationDialog: $showingConfirmationDialog)
                                 }
                                 
-                            }
+                            }.frame(height:300)
                             
                             
                             

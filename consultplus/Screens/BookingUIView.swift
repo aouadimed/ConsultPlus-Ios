@@ -168,11 +168,6 @@ struct BookingUIView: View {
 
 
 
-
-
-
-
-
                                 Divider().frame(width: 320,height: 2).padding()
                                 HStack {
                                     Text("Time")
@@ -215,7 +210,7 @@ struct BookingUIView: View {
                                         .padding()
                                         .background(Color("AccentColor"))
                                         .cornerRadius(50)
-                                        .padding().padding(.bottom,60)
+                                        .padding().padding(.bottom,30)
                                 })
                                 .alert(isPresented: $showingConfirmationDialog) {
                                     Alert(
@@ -363,6 +358,7 @@ struct BookingUIView: View {
 struct BookingUIView_Previews: PreviewProvider {
     static var previews: some View {
         BookingUIView()
+        
     }
 }
 
