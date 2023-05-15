@@ -21,7 +21,7 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://172.20.10.8:5000/"
+    let baseUrl = "http://192.168.70.151:5000/"
    
     struct UserResponse: Codable {
         let email: String?
@@ -380,6 +380,7 @@ class ApiManager{
         let firstname: String
         let lastname: String
         let image: String
+        let imagename : String
         
         enum CodingKeys: String, CodingKey {
             case id = "_id"
@@ -388,6 +389,7 @@ class ApiManager{
             case firstname
             case lastname
             case image
+            case imagename
         }
 
         func hash(into hasher: inout Hasher) {
@@ -397,6 +399,7 @@ class ApiManager{
             hasher.combine(firstname)
             hasher.combine(lastname)
             hasher.combine(image)
+            hasher.combine(imagename)
         }
 
         static func ==(lhs: Doctor, rhs: Doctor) -> Bool {
@@ -405,7 +408,8 @@ class ApiManager{
                    lhs.specialite == rhs.specialite &&
                    lhs.firstname == rhs.firstname &&
                    lhs.lastname == rhs.lastname &&
-                   lhs.image == rhs.image
+                   lhs.image == rhs.image &&
+                   lhs.imagename == rhs.imagename
         }
     }
 
@@ -572,6 +576,92 @@ class ApiManager{
         }
     }
     
+    func getDoctorAppointments(doctorId: String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        let parameters = [        "doctor": doctorId    ]
+        
+        AF.request(baseUrl+"recherche/booking", parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let DoctorBookings = try decoder.decode([DoctorBooking].self, from: data)
+                    print(DoctorBookings)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(DoctorBookings))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get PatientBookingss")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+            }
+        }
+    }
+
+    struct CheckTime: Codable, Identifiable, Hashable {
+        let time: String
+        
+        var id: String {
+            time
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case time
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(time)
+        }
+
+        static func ==(lhs: CheckTime, rhs: CheckTime) -> Bool {
+            return lhs.time == rhs.time
+        }
+    }
+
+
+
+
+    func Chektimes(doctorId: String,date : String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [        .accept("application/json")    ]
+        
+        let parameters = [        "doctor": doctorId ,"date": date   ]
+        
+        AF.request(baseUrl+"recherche/time", parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+            
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let CheckTimes = try decoder.decode([CheckTime].self, from: data)
+                    print(CheckTimes)
+                    
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(CheckTimes))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Failed to get PatientBookingss")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Failed to decode response")))
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Failed to get Doctors")))
+            }
+        }
+    }
 
 }
 

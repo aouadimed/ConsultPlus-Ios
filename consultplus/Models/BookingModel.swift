@@ -79,3 +79,31 @@ struct PatientBooking: Codable, Identifiable, Hashable {
         self.patient = patient
     }
 }
+
+
+struct DoctorBooking: Codable, Identifiable, Hashable {
+    let id: String
+    let date: String
+    let time : String
+    let status: Int
+    let doctor: String
+    let patient: Fullnames
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case date
+        case time
+        case status = "statu"
+        case doctor
+        case patient
+    }
+
+    init(id: String, date: String, time: String, status: Int, doctor: String, patient: Fullnames) {
+        self.id = id
+        self.date = date
+        self.time = time
+        self.status = status
+        self.doctor = doctor
+        self.patient = patient
+    }
+}

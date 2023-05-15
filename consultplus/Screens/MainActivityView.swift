@@ -6,64 +6,107 @@
 //
 
 import SwiftUI
+import KeychainAccess
 
 struct MainActivityView: View {
     @State var selectedTab = "home"
     @State var title = "House"
+    @State private var role: String = ""
 
     var body: some View {
         
-     
-        
-        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)){
-            
-            TabView(selection: $selectedTab){
-                HomeUIView().tag("house.fill")
+        NavigationView{
+            ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)){
                 
               
-              DoctorsListUIView().tag("magnifyingglass")
                 
-                UpdateProfileView().tag("menucard.fill")
+                
+                
+                if(self.role == Optional("patient")){
+                    TabView(selection: $selectedTab){
+                        HomeUIView().tag("house.fill")
+                        
+                      
+                      DoctorsListUIView().tag("magnifyingglass")
+                        
+                        UpdateProfileView().tag("menucard.fill")
+
+                        
+                    }.edgesIgnoringSafeArea(.all)
+                } else if (self.role == Optional("doctor")){
+                    TabView(selection: $selectedTab){
+                        ConfirmRdvUIView().tag("house.fill")
+                        
+                                              
+                        UpdateProfileView().tag("menucard.fill")
+
+                        
+                    }.edgesIgnoringSafeArea(.all)
+                }else{
+                    
+                    TabView(selection: $selectedTab){
+                        
+                                              
+                        UpdateProfileView().tag("menucard.fill")
+
+                        
+                    }.edgesIgnoringSafeArea(.all)
+                }
+                
+                
 
                 
-            }.edgesIgnoringSafeArea(.all)
+                
+                
+                
+                
+                
             
-            
-            
-            
-            
-            
-        
-            HStack(spacing : 0){
-                    ForEach(tabs,id: \.self){
-                        image in
-                        BottomNavBarItem(image: image, selectedTab: $selectedTab, title: $title)
-                        if image != tabs.last{
-                            Spacer(minLength: 0)
+                HStack(spacing : 0){
+                        ForEach(tabs,id: \.self){
+                            image in
+                            BottomNavBarItem(image: image, selectedTab: $selectedTab, title: $title)
+                            if image != tabs.last{
+                                Spacer(minLength: 0)
+                            }
                         }
-                    }
-                    
-                    
-                }.padding()
-                .background(Color.accentColor)
-                .clipShape(Capsule()).padding()
-                .padding(.bottom,-30)
-                .shadow(color: Color.black.opacity(0.15), radius: 8,x:2 ,y:6)
-                .frame(maxHeight: .infinity,alignment: .bottom)
-                .ignoresSafeArea(.keyboard,edges: .bottom)
+                        
+                        
+                    }.padding()
+                    .background(Color.accentColor)
+                    .clipShape(Capsule()).padding()
+                    .padding(.bottom,-30)
+                    .shadow(color: Color.black.opacity(0.15), radius: 8,x:2 ,y:6)
+                    .frame(maxHeight: .infinity,alignment: .bottom)
+                    .ignoresSafeArea(.keyboard,edges: .bottom)
+                
+                
+            }
             
             
-        }
-        
-        
-        
+            
+
+                
 
             
+                
             
-        
+            
+        }.onAppear{
+            
+            
+            let keychain = Keychain(service: "esprit.tn.consultplus")
+            self.role = keychain["Role"] ?? ""
+            print("zdzdzdzd z    " ,self.role)
+            
+            
             
             
         }
+        
+       
+            
+    }
 
 }
 

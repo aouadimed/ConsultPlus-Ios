@@ -28,10 +28,6 @@ struct DoctorsListUIView: View {
                             Spacer()
                             Spacer()
                             Spacer()
-                            VStack{
-                                Text("Hello_").fixedSize()
-                                Text(self.name)
-                            }.frame(height: 50).fixedSize()
                             Spacer()
                             ZStack{
                                 Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
@@ -204,6 +200,15 @@ struct DoctorCardView: View {
                 }
                 .frame(width: 350, height: 90)
             }.padding()
+        }.onAppear {
+            ApiManager.shareInstance.downloadImage(email: doctordata.email,imageName: doctordata.imagename) { result in
+                switch result {
+                case .success(let success):
+                    print("Image downloaded successfully: \(success)")
+                case .failure(let error):
+                    print("Error downloading image: \(error)")
+                }
+            }
         }
     }
 }

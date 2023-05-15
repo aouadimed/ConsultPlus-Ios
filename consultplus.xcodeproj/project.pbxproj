@@ -18,6 +18,7 @@
 		5410045729C889090012724B /* consultplusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */; };
 		5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C60E29C8C289008BE8EC /* SignUpView.swift */; };
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
+		54A8D9212A127F7200844D8A /* ConfirmRdvUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */; };
 		54AA452C29FA289C006ED6FF /* BookingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AA452B29FA289C006ED6FF /* BookingModel.swift */; };
 		54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */; };
 		54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */; };
@@ -71,6 +72,7 @@
 		5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5429C60E29C8C289008BE8EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		5429C61029C8C3F9008BE8EC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRdvUIView.swift; sourceTree = "<group>"; };
 		54AA452B29FA289C006ED6FF /* BookingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingModel.swift; sourceTree = "<group>"; };
 		54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
 		54C8781929CD293C00FC9B36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				54EA463E29EE37F20052527C /* DoctorsListUIView.swift */,
 				54EA464029EE3D1F0052527C /* DoctorProfilUIView.swift */,
 				54EA464229EE4BD10052527C /* BookingUIView.swift */,
+				54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54A8D9212A127F7200844D8A /* ConfirmRdvUIView.swift in Sources */,
 				54F7757F29CA0A1500EA2EA7 /* ApiManger.swift in Sources */,
 				54F7758229CA0E4800EA2EA7 /* UserModel.swift in Sources */,
 				54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */,
@@ -674,6 +678,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = consultplus/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "use this to unlock appliation";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -704,6 +709,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = consultplus/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "use this to unlock appliation";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -13,6 +13,7 @@ struct UpdateProfileView: View {
         UISegmentedControl.appearance().selectedSegmentTintColor = .lightGray
         
     }
+    
     @State private var selected_role : ParRole = .patient
     @State private var name: String = ""
     @State private var email: String = ""
@@ -28,9 +29,17 @@ struct UpdateProfileView: View {
     @State private var checkRole: String = "patient"
    @State var shouldShowImagePicker = false
    @State var image: UIImage?
+    @State private var showingConfirmationDialog = false
+    @State private var navigateTologinPage = false
+
+    
+
     var body: some View {
         NavigationView{
                 ZStack(alignment: .top) {
+                    NavigationLink(destination: SignInView().navigationBarBackButtonHidden(true), isActive: $navigateTologinPage) {
+            EmptyView()
+                    }.navigationBarBackButtonHidden(true)
                     Color(.white).edgesIgnoringSafeArea(.all)
                     Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
                     VStack{
@@ -38,17 +47,13 @@ struct UpdateProfileView: View {
                             Spacer()
                             Spacer()
                             Spacer()
-                            VStack{
-                                Text("Hello_").fixedSize()
-                                Text(self.name)
-                            }.frame(height: 50).fixedSize()
                             Spacer()
                             Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
                         }
                         if(checkRole=="patient"){
-                            ChosenRoleView(selected_role: .patient,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
+                            ChosenRoleView(selected_role: .patient,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
                         }else if (checkRole == "doctor"){
-                            ChosenRoleView(selected_role: .doctor,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
+                            ChosenRoleView(selected_role: .doctor,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
     
                         }else{
                             Picker("Choose a role", selection: $selected_role){
@@ -57,15 +62,45 @@ struct UpdateProfileView: View {
                                 }
                                 
                             }.pickerStyle(SegmentedPickerStyle()).padding()
-                            ChosenRoleView(selected_role: selected_role,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
+                            ChosenRoleView(selected_role: selected_role,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
                         }
                         
+                        Button(action: {
+                            showingConfirmationDialog = true
+                        }, label: {
+                            Text("Log out")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.red)
+                                .cornerRadius(50).padding()
+                        })
+                    
+                   
+                    }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
+                        Alert(
+                            title: Text("Log Out"),
+                            message: Text("Are you sure you want to Log Out ?"),
+                            primaryButton: .default(Text("Yes")) {
+                                let keychain = Keychain(service: "esprit.tn.consultplus")
+                                let keys = keychain.allKeys()
+                                for key in keys {
+                                    print("key: \(key)")
+                                    do {
+                                        try keychain.remove(key)
+                                    } catch let error {
+                                        print("error: \(error)")
+                                    }
+                                }
+                                terminateApp()
+                          
+                            },
+                            secondaryButton: .cancel()
+                        )
                     }
                         
-                        
-           
-                    
-                }.navigationBarTitle("", displayMode: .inline)
+                }
             
 
         }.onAppear {
@@ -81,6 +116,9 @@ struct UpdateProfileView: View {
 
 
 
+    }
+    private func terminateApp() {
+       exit(0)
     }
     func userdatils(){
         let keychain = Keychain(service: "esprit.tn.consultplus")
@@ -203,13 +241,15 @@ struct ChosenRoleView : View {
     @Binding var  description: String
     @Binding var image: UIImage?
     @Binding var shouldShowImagePicker : Bool
+    @Binding var showingConfirmationDialog : Bool
+
     var body: some View {
         
         switch selected_role {
         case .patient:
-            ChosenRolePatientView(fullname:$fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
+            ChosenRolePatientView(fullname:$fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
         case .doctor:
-            ChosenRoleDoctorView(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
+            ChosenRoleDoctorView(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
         }
         
         
@@ -307,6 +347,7 @@ struct ChosenRoleView : View {
         @Binding var adresse: String
         @Binding var image: UIImage?
         @Binding var shouldShowImagePicker : Bool
+        @Binding var showingConfirmationDialog : Bool
         var body: some View {
             Form{
                 
@@ -314,9 +355,7 @@ struct ChosenRoleView : View {
                 CommonFileds(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
               
                 Button(action: {
-                    
-                    updateCommonFileds()
-                                    
+                    showingConfirmationDialog = true
                 }, label: {
                     Text("Save")
                         .fontWeight(.bold)
@@ -328,7 +367,16 @@ struct ChosenRoleView : View {
                 })
             
            
-            }.scrollContentBackground(.hidden)
+            }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
+                Alert(
+                    title: Text("Edit Info"),
+                    message: Text("Are you sure you want to proceed ?"),
+                    primaryButton: .default(Text("save")) {
+                        updateCommonFileds()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
         }
         func updateCommonFileds(){
             
@@ -378,6 +426,7 @@ struct ChosenRoleView : View {
         @Binding var  description: String
         @Binding var image: UIImage?
         @Binding var shouldShowImagePicker : Bool
+        @Binding var showingConfirmationDialog : Bool
         var body: some View {
             Form{
                     CommonFileds(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
@@ -413,10 +462,7 @@ struct ChosenRoleView : View {
                         .shadow(color: Color.black.opacity(0.08), radius: 60 ,x: 0.0,y:16)
                         .padding()
                     Button(action: {
-                        
-                        updateCommonFileds()
-                        updateDocteurFileds()
-                        
+                        showingConfirmationDialog = true
                     }, label: {
                         Text("Save")
                             .fontWeight(.bold)
@@ -427,7 +473,17 @@ struct ChosenRoleView : View {
                             .cornerRadius(50).padding()
                     })
             
-            }.scrollContentBackground(.hidden)
+            }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
+                Alert(
+                    title: Text("Edit Info"),
+                    message: Text("Are you sure you want to proceed ?"),
+                    primaryButton: .default(Text("save")) {
+                        updateCommonFileds()
+                        updateDocteurFileds()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
                 
                 
 

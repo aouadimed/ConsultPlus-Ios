@@ -32,19 +32,15 @@ struct DoctorProfilUIView: View {
         NavigationView{
 
                 ZStack(alignment: .top) {
-                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail).navigationBarBackButtonHidden(true), isActive: $navigateToBookinngPage) {
+                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail), isActive: $navigateToBookinngPage) {
             EmptyView()
-                    }.navigationBarBackButtonHidden(true)
+                    }
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
                         HStack(alignment: .top){
                             Spacer()
                             Spacer()
                             Spacer()
-                            VStack{
-                                Text("Hello_").fixedSize()
-                                Text(self.name.capitalized)
-                            }.frame(height: 50).fixedSize()
                             Spacer()
                             ZStack{
                                 Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
@@ -159,6 +155,7 @@ struct DoctorProfilUIView: View {
             
 
         }.onAppear {
+            self.navigateToBookinngPage = false
             DocotrInformation()
             userdatils()
            

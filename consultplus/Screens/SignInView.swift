@@ -8,6 +8,7 @@
 import SwiftUI
 import Alamofire
 import KeychainAccess
+import LocalAuthentication
 
 
 struct SignInView: View {
@@ -53,11 +54,17 @@ struct SignInView: View {
                     NavigationLink(destination: ForgetPasswordView(), label:
                                     {
                         Text("Forget Password").foregroundColor(Color("AccentColor"))
+                        
                     }
+                                  
                     
                     
                     
                     ).navigationBarHidden(true)
+                    
+                    Button("faceid"){
+                        faceid()
+                    }
                     
                     Button(action: {
                         
@@ -104,6 +111,23 @@ struct SignInView: View {
 
     }
     
+    func faceid(){
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error){
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: "faceid secuity"){
+                success, AuthenticationError in
+                if success{
+                    NavigateToMainPage()
+                }else{
+                    
+                }
+            }
+        }
+    }
+    
+    
     func NavigateToMainPage(){
         
         let user = UserModel(email: email.lowercased(), password: password)
@@ -123,6 +147,7 @@ struct SignInView: View {
                      let keychain = Keychain(service: "esprit.tn.consultplus")
                      keychain["Email"] = email.lowercased()
                      keychain["Role"] = role
+                     print(keychain["Role"])
                      
                      
                      ApiManager.shareInstance.downloadImage(email: email,imageName: image) { result in

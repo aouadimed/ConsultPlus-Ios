@@ -47,6 +47,8 @@ struct BookingUIView: View {
       @State private var selectedTime: String?
     @State private var selectedTimeIndex: Int?
     @State private var showingConfirmationDialog = false
+    @State var timesTaken: [ApiManager.CheckTime] = []
+
 
     init(doctorEmail: String? = nil) {
         self.doctorEmail = doctorEmail
@@ -71,10 +73,6 @@ struct BookingUIView: View {
                             Spacer()
                             Spacer()
                             Spacer()
-                            VStack{
-                                Text("Hello_").fixedSize()
-                                Text(self.name)
-                            }.frame(height: 50).fixedSize()
                             Spacer()
                             ZStack{
                                 Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
@@ -115,10 +113,11 @@ struct BookingUIView: View {
                                                         } else {
                                                             selectedDate = nil
                                                         }
-                                                    })) {
+                                                    }), DoctorId: Binding($DoctorId)!, timesTaken: Binding(projectedValue: $timesTaken)){
                                                         selectedDate = date
                                                         print(date)
                                                     }
+
                                                         
                                                     
                                                         .id(formatDate(date: date))
@@ -246,8 +245,9 @@ struct BookingUIView: View {
 
         }.onAppear {
             userdatils()
-            DocotrInformation()
-}
+DocotrInformation()
+            
+        }
 
     }
     func formatDate(date: Date) -> String {
@@ -310,6 +310,9 @@ struct BookingUIView: View {
                     let imageData = try Data(contentsOf: fileUrl)
                     self.doctorimage = UIImage(data: imageData)
                     self.DoctorId = userResponse.id
+                    
+                    
+                    
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -320,6 +323,7 @@ struct BookingUIView: View {
             }
         }
     }
+    
     
     func BookAppointment(){
         let dateFormatter = DateFormatter()
@@ -344,6 +348,7 @@ struct BookingUIView: View {
              case .failure:
                  
                 print("no")
+                 
 
              }
             
@@ -366,17 +371,22 @@ struct CustomView: View {
     
     let day: String
     let date: String
-    let action: () -> Void // closure parameter
+    let action: () -> Void
     @Binding var isSelected: Bool
+    @Binding var DoctorId: String
+    @Binding var timesTaken: [ApiManager.CheckTime]
     
-    init(date: Date, isSelected: Binding<Bool>, action: @escaping () -> Void) {
+    init(date: Date, isSelected: Binding<Bool>, DoctorId: Binding<String>, timesTaken: Binding<[ApiManager.CheckTime]>, action: @escaping () -> Void) {
         let formatter = DateFormatter()
         formatter.dateFormat = "E"
         self.day = formatter.string(from: date)
         formatter.dateFormat = "d"
         self.date = formatter.string(from: date)
-        self.action = action
         self._isSelected = isSelected
+        self._DoctorId = DoctorId
+        self._timesTaken = timesTaken
+        self.action = action
+
     }
     
     var body: some View {
@@ -396,10 +406,31 @@ struct CustomView: View {
         .padding(EdgeInsets(top:20,leading:10,bottom: 20,trailing: 0))
         .onTapGesture {
             isSelected.toggle()
-            action() // execute the closure when tapped
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let fullDate = formatter.string(from: date)
+            getRelatedTime(for: fullDate)
+            action()
+        }
+    }
+    func getRelatedTime(for date: String){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        ApiManager.shareInstance.Chektimes(doctorId: self.DoctorId,date : date) { result in
+            switch result {
+            case .success(let CheckTime as [ApiManager.CheckTime]):
+                self.timesTaken = CheckTime
+                print(self.timesTaken)
+            case .failure(let error):
+                print(error.localizedDescription)
+            default:
+                print("Unexpected result type")
+            }
         }
     }
 }
+
+
 
 
 
