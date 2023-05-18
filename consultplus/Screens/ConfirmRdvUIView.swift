@@ -14,11 +14,17 @@ struct ConfirmRdvUIView: View {
     @State  var doctorId: String? = ""
     @State var appointments: [DoctorBooking] = []
     @State private var showingConfirmationDialog = false
+    @State private var showingConfirmationDialogAprrove = false
     @State private var currentPage = 0
-    let pageSize = 3
+    @State private var navigateToMainPage = false
+
+    let pageSize = 4
     var body: some View {
         NavigationStack{
                 ZStack(alignment: .top) {
+                    NavigationLink(destination: MainActivityView().navigationBarHidden(true), isActive: $navigateToMainPage) {
+            EmptyView()
+                    }
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
                         HStack(alignment: .top){
@@ -65,11 +71,11 @@ struct ConfirmRdvUIView: View {
                                     let startIndex = currentPage * pageSize
                                     let endIndex = min(startIndex + pageSize, appointments.count)
                                     ForEach(appointments[startIndex..<endIndex], id: \.self) { appointment in
-                                        AppointmentConfirmationView(data: appointment, showingConfirmationDialog: $showingConfirmationDialog)
+                                        AppointmentConfirmationView(data: appointment, showingConfirmationDialog: $showingConfirmationDialog, showingConfirmationDialogAprrove: $showingConfirmationDialogAprrove, navigateToMainPage: $navigateToMainPage)
                                     }
                                 } else {
                                     ForEach(appointments, id: \.self) { appointment in
-                                        AppointmentConfirmationView(data: appointment, showingConfirmationDialog: $showingConfirmationDialog)
+                                        AppointmentConfirmationView(data: appointment, showingConfirmationDialog: $showingConfirmationDialog, showingConfirmationDialogAprrove: $showingConfirmationDialogAprrove, navigateToMainPage: $navigateToMainPage)
                                     }
                                 }
                             }
@@ -159,6 +165,10 @@ struct AppointmentConfirmationView: View {
     let data: DoctorBooking
 
     @Binding var showingConfirmationDialog : Bool
+    @Binding var showingConfirmationDialogAprrove : Bool
+    @Binding var navigateToMainPage : Bool
+
+    
     var body: some View {
         VStack(spacing: 3) {
             HStack {
@@ -190,19 +200,70 @@ struct AppointmentConfirmationView: View {
                     
                     if(data.status == 0){
                         
-                        VStack(spacing: 2) {
-                            Image(systemName: "circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
-                            Text("Pending for confirmation")
-                                .font(.custom("Poppins", size: 10))
-                                .foregroundColor(Color(red: 0.0, green: 0.5, blue: 1.0))
+                  
+                        HStack{
+                            
+                            Button(action: {
+                                showingConfirmationDialogAprrove = true
+                                
+                            }) {
+                                Text("Aprrove")
+                                    .font(.custom("Roboto-Regular", size: 8))
+                                    .frame(width: 70, height: 30)
+                                    .foregroundColor(.white)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.accentColor, lineWidth: 1)
+                                    ).padding(.trailing,20)
+                            }.alert(isPresented: $showingConfirmationDialogAprrove) {
+                                Alert(
+                                    title: Text("Aprrove this booking"),
+                                    message: Text("Are you sure you want to Aprrove this appointment?"),
+                                    primaryButton: .default(Text("Aprrove")) {
+                                        ConfirmRdv(patient : data.id)
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
+                            
+                            
+                            
+                            
+                            Button(action: {
+                                showingConfirmationDialog = true
+                                
+                            }) {
+                                Text("Cancel")
+                                    .font(.custom("Roboto-Regular", size: 8))
+                                    .frame(width: 70, height: 30)
+                                    .foregroundColor(.white)
+                                    .background(Color.red)
+                                    .cornerRadius(10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.red, lineWidth: 1)
+                                    ).padding(.trailing,20)
+                            }.alert(isPresented: $showingConfirmationDialog) {
+                                Alert(
+                                    title: Text("Cancel this booking"),
+                                    message: Text("Are you sure you want to cancel this appointment?"),
+                                    primaryButton: .default(Text("Yes")) {
+                                        deleteappointments(patient : data.id)
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
+                            
+                            
+                            
+                            
+                            
                         }
                         
                         
-                    } else {
+                    } else if(data.status == 1)  {
                         
                         Button(action: {
                             showingConfirmationDialog = true
@@ -220,7 +281,7 @@ struct AppointmentConfirmationView: View {
                                 ).padding(.trailing,20)
                         }.alert(isPresented: $showingConfirmationDialog) {
                             Alert(
-                                title: Text("Cancel booking"),
+                                title: Text("Cancel this booking"),
                                 message: Text("Are you sure you want to cancel this appointment?"),
                                 primaryButton: .default(Text("Book")) {
                                     deleteappointments(patient : data.id)
@@ -249,7 +310,7 @@ struct AppointmentConfirmationView: View {
              case .success:
                  do {
                
-                     print("sa7a")
+                     navigateToMainPage=true
                  }
                  
              case .failure:
@@ -258,6 +319,24 @@ struct AppointmentConfirmationView: View {
 
              }
             
+        }
+    }
+    func ConfirmRdv(patient : String){
+        ApiManager.shareInstance.ConfirmRdv(Id: patient) {
+            (result) in
+             switch result
+             {
+             case .success:
+                 do {
+            
+                     navigateToMainPage=true
+                 }
+                 
+             case .failure:
+                 
+                print("no")
+
+             }
         }
     }
 }

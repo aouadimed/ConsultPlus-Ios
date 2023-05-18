@@ -12,15 +12,15 @@ import Combine
 
 struct BookingUIView: View {
     let times = [
-        TimeView(time: "10:00", endTime: "11:00", isSelected: false, selectTime: {}),
-        TimeView(time: "11:00", endTime: "12:00", isSelected: false, selectTime: {}),
-        TimeView(time: "12:00", endTime: "13:00", isSelected: false, selectTime: {}),
-        TimeView(time: "13:00", endTime: "14:00", isSelected: false, selectTime: {}),
-        TimeView(time: "14:00", endTime: "15:00", isSelected: false, selectTime: {}),
-        TimeView(time: "15:00", endTime: "16:00", isSelected: false, selectTime: {}),
-        TimeView(time: "16:00", endTime: "17:00", isSelected: false, selectTime: {}),
-        TimeView(time: "17:00", endTime: "18:00", isSelected: false, selectTime: {}),
-        TimeView(time: "18:00", endTime: "19:00", isSelected: false, selectTime: {})
+        TimeView(time: "10:00", endTime: "11:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "11:00", endTime: "12:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "12:00", endTime: "13:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "13:00", endTime: "14:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "14:00", endTime: "15:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "15:00", endTime: "16:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "16:00", endTime: "17:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "17:00", endTime: "18:00", isSelected: false,isTaken: false, selectTime: {}),
+        TimeView(time: "18:00", endTime: "19:00", isSelected: false,isTaken: false, selectTime: {})
     ]
     let columns = [
         GridItem(.flexible()),
@@ -48,7 +48,9 @@ struct BookingUIView: View {
     @State private var selectedTimeIndex: Int?
     @State private var showingConfirmationDialog = false
     @State var timesTaken: [ApiManager.CheckTime] = []
-
+    @State private var navigateToMainPage = false
+    @State private var  showingErrorMessage = false
+    @State private var isDarkModeEnabled = false
 
     init(doctorEmail: String? = nil) {
         self.doctorEmail = doctorEmail
@@ -66,7 +68,11 @@ struct BookingUIView: View {
 */
     var body: some View {
         NavigationView{
+            ScrollView(.vertical) {
                 ZStack(alignment: .top) {
+                    NavigationLink(destination: MainActivityView().navigationBarHidden(true), isActive: $navigateToMainPage) {
+            EmptyView()
+                    }
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
                         HStack(alignment: .top){
@@ -81,7 +87,7 @@ struct BookingUIView: View {
                             
                             
                         }
-                        ScrollView(.vertical) {
+                    
                         ZStack{
                             Image("Rectangle ili wset").resizable().edgesIgnoringSafeArea(.bottom)
                             VStack(spacing:0 ){
@@ -180,12 +186,16 @@ struct BookingUIView: View {
                                 ScrollView {
                                     LazyVGrid(columns: columns) {
                                         ForEach(0..<9) { i in
+                                            let time = times[i]
+                                            let isTaken = timesTaken.contains { $0.time == time.time }
+                                            
                                             TimeView(
-                                                time: times[i].time,
-                                                endTime: times[i].endTime,
+                                                time: time.time,
+                                                endTime: time.endTime,
                                                 isSelected: selectedTimeIndex == i,
+                                                isTaken: isTaken,
                                                 selectTime: {
-                                                    selectedTime = "\(times[i].time) - \(times[i].endTime)"
+                                                    selectedTime = "\(time.time) - \(time.endTime)"
                                                     selectedTimeIndex = i
                                                     print(selectedTime)
                                                 }
@@ -195,12 +205,31 @@ struct BookingUIView: View {
                                     }
                                     .padding(.horizontal)
                                     .padding(.vertical, 10)
+
                                 }
                                 .frame(height: 200)
 
                                 
                                 Button(action: {
-                                    showingConfirmationDialog = true
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = dateFormatter.string(from: selectedDate!)
+                                    let timeString: String? = selectedTime
+                                    let formattedTimeString = timeString?.components(separatedBy: " ").first ?? "" //
+                                    
+                                    if(!dateString.isEmpty && !formattedTimeString.isEmpty){
+                                        showingConfirmationDialog = true
+                                    }else
+                                    {
+                                        
+                                        
+                                        
+                                        showingErrorMessage = true
+
+                            
+                                    }
+                                    
+                                    
                                 }, label: {
                                     Text("BOOK APPOINTMENT")
                                         .fontWeight(.bold)
@@ -216,9 +245,19 @@ struct BookingUIView: View {
                                         title: Text("Confirm booking"),
                                         message: Text("Are you sure you want to book this appointment?"),
                                         primaryButton: .default(Text("Book")) {
-                                            BookAppointment()
+
+                                        
+                                                BookAppointment()
+                                            
+                            
                                         },
                                         secondaryButton: .cancel()
+                                    )
+                                }        .alert(isPresented: $showingErrorMessage) {
+                                    Alert(
+                                        title: Text("Error"),
+                                        message: Text("Please select a valid date and time."),
+                                        dismissButton: .default(Text("OK"))
                                     )
                                 }
                                 
@@ -341,8 +380,7 @@ DocotrInformation()
              case .success:
                  do {
                
-                     print("sa7a")
-                 
+                     navigateToMainPage = true
                  }
                  
              case .failure:
@@ -372,6 +410,7 @@ struct CustomView: View {
     let day: String
     let date: String
     let action: () -> Void
+    let fullDate : String
     @Binding var isSelected: Bool
     @Binding var DoctorId: String
     @Binding var timesTaken: [ApiManager.CheckTime]
@@ -386,7 +425,8 @@ struct CustomView: View {
         self._DoctorId = DoctorId
         self._timesTaken = timesTaken
         self.action = action
-
+        formatter.dateFormat = "yyyy-MM-dd"
+        self.fullDate = formatter.string(from: date)
     }
     
     var body: some View {
@@ -406,9 +446,6 @@ struct CustomView: View {
         .padding(EdgeInsets(top:20,leading:10,bottom: 20,trailing: 0))
         .onTapGesture {
             isSelected.toggle()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            let fullDate = formatter.string(from: date)
             getRelatedTime(for: fullDate)
             action()
         }
@@ -440,35 +477,40 @@ struct TimeView: View {
     let time: String
     let endTime: String
     let isSelected: Bool
+    let isTaken: Bool
     let selectTime: () -> Void
+    
     
     var body: some View {
         VStack {
             HStack {
                 Text(time)
                     .font(.custom("Poppins-Medium", size: 14.30))
-                    .foregroundColor(isSelected ? .white : .black)
+                    .foregroundColor(isSelected || isTaken ? .white : .black)
                 Text(" - ")
                     .font(.custom("Poppins-Medium", size: 14.30))
-                    .foregroundColor(isSelected ? .white : .black)
+                    .foregroundColor(isSelected || isTaken ? .white : .black)
                 Text(endTime)
                     .font(.custom("Poppins-Medium", size: 14.30))
-                    .foregroundColor(isSelected ? .white : .black)
+                    .foregroundColor(isSelected || isTaken ? .white : .black)
             }
             .padding(.vertical, 10.40)
         }
         .frame(width: 110, height: 40)
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(isSelected ? Color.accentColor: Color.white)
+                .fill(isSelected ? Color.accentColor : (isTaken ? Color.red : Color.white))
                 .shadow(radius: 2, x: 0, y: 2)
         )
         .padding(.horizontal, 10.40)
         .padding(.vertical, 6.50)
         .onTapGesture {
-            selectTime()
+            if !isTaken {
+                selectTime()
+            }
         }
     }
+
 }
 
 

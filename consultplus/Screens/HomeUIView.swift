@@ -15,11 +15,15 @@ struct HomeUIView: View {
     @State  var patientId: String? = ""
     @State var appointments: [PatientBooking] = []
     @State private var showingConfirmationDialog = false
+    @State private var navigateToMainPage = false
 
 
     var body: some View {
         NavigationStack{
                 ZStack(alignment: .top) {
+                    NavigationLink(destination: MainActivityView().navigationBarHidden(true), isActive: $navigateToMainPage) {
+            EmptyView()
+                    }
                     Color(.white).edgesIgnoringSafeArea(.all)
                     VStack{
                         HStack(alignment: .top){
@@ -63,17 +67,24 @@ struct HomeUIView: View {
                                     .fontWeight(.bold)
                                     .padding(.bottom, 10)
                                 Spacer()
+                                NavigationLink(destination: MyRdvUIView(), label:
+                                                {
+                                    Text("Expand")
+                                        .fontWeight(.bold)
+                                        .padding(.bottom, 10)
+                                    
+                                }
+)
                             }
                             .padding(.leading, 10).padding(.top,10)
                             
                             ScrollView(.vertical) {
-                                
-                               
-                                ForEach(appointments, id: \.self) { appointment in
-                                    AppointmentView(data: appointment,showingConfirmationDialog: $showingConfirmationDialog)
+                                ForEach(appointments.prefix(4), id: \.self) { appointment in
+                                    AppointmentView(data: appointment, showingConfirmationDialog: $showingConfirmationDialog, navigateToMainPage: $navigateToMainPage)
                                 }
-                                
-                            }.frame(height:300)
+                            }.padding(.bottom,100)
+                        
+
                             
                             
                             
@@ -255,6 +266,7 @@ struct AppointmentView: View {
     let data: PatientBooking
 
     @Binding var showingConfirmationDialog : Bool
+    @Binding var navigateToMainPage : Bool
     var body: some View {
         VStack(spacing: 3) {
             HStack {
@@ -347,8 +359,7 @@ struct AppointmentView: View {
              {
              case .success:
                  do {
-               
-                     print("sa7a")
+                     navigateToMainPage=true
                  }
                  
              case .failure:

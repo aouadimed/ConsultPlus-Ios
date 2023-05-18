@@ -30,14 +30,17 @@ struct UpdateProfileView: View {
    @State var shouldShowImagePicker = false
    @State var image: UIImage?
     @State private var showingConfirmationDialog = false
-    @State private var navigateTologinPage = false
+    @State private var showingLogOutDialog = false
+    @State private var navigateToMainPage = false
+    
 
     
 
     var body: some View {
+        
         NavigationView{
                 ZStack(alignment: .top) {
-                    NavigationLink(destination: SignInView().navigationBarBackButtonHidden(true), isActive: $navigateTologinPage) {
+                    NavigationLink(destination: MainActivityView().navigationBarBackButtonHidden(true), isActive: $navigateToMainPage) {
             EmptyView()
                     }.navigationBarBackButtonHidden(true)
                     Color(.white).edgesIgnoringSafeArea(.all)
@@ -51,9 +54,9 @@ struct UpdateProfileView: View {
                             Image("top right").padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -30))
                         }
                         if(checkRole=="patient"){
-                            ChosenRoleView(selected_role: .patient,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
+                            ChosenRoleView(selected_role: .patient,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, navigateToMainPage: $navigateToMainPage)
                         }else if (checkRole == "doctor"){
-                            ChosenRoleView(selected_role: .doctor,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
+                            ChosenRoleView(selected_role: .doctor,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, navigateToMainPage: $navigateToMainPage)
     
                         }else{
                             Picker("Choose a role", selection: $selected_role){
@@ -62,11 +65,11 @@ struct UpdateProfileView: View {
                                 }
                                 
                             }.pickerStyle(SegmentedPickerStyle()).padding()
-                            ChosenRoleView(selected_role: selected_role,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
+                            ChosenRoleView(selected_role: selected_role,fullname: $name, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, navigateToMainPage: $showingConfirmationDialog)
                         }
                         
                         Button(action: {
-                            showingConfirmationDialog = true
+                            showingLogOutDialog = true
                         }, label: {
                             Text("Log out")
                                 .fontWeight(.bold)
@@ -78,7 +81,7 @@ struct UpdateProfileView: View {
                         })
                     
                    
-                    }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
+                    }.scrollContentBackground(.hidden).alert(isPresented: $showingLogOutDialog) {
                         Alert(
                             title: Text("Log Out"),
                             message: Text("Are you sure you want to Log Out ?"),
@@ -241,15 +244,15 @@ struct ChosenRoleView : View {
     @Binding var  description: String
     @Binding var image: UIImage?
     @Binding var shouldShowImagePicker : Bool
-    @Binding var showingConfirmationDialog : Bool
+    @Binding var navigateToMainPage : Bool
 
     var body: some View {
         
         switch selected_role {
         case .patient:
-            ChosenRolePatientView(fullname:$fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
+            ChosenRolePatientView(fullname:$fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker, navigateToMainPage: $navigateToMainPage)
         case .doctor:
-            ChosenRoleDoctorView(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, showingConfirmationDialog: $showingConfirmationDialog)
+            ChosenRoleDoctorView(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender , adresse: $adresse, selected_specialite: $selected_specialite, yearsOfpractice: $yearsOfpractice, patientnb: $patientnb, description: $description,image: $image,shouldShowImagePicker: $shouldShowImagePicker, navigateToMainPage: $navigateToMainPage)
         }
         
         
@@ -347,7 +350,7 @@ struct ChosenRoleView : View {
         @Binding var adresse: String
         @Binding var image: UIImage?
         @Binding var shouldShowImagePicker : Bool
-        @Binding var showingConfirmationDialog : Bool
+        @Binding var navigateToMainPage : Bool
         var body: some View {
             Form{
                 
@@ -355,7 +358,7 @@ struct ChosenRoleView : View {
                 CommonFileds(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
               
                 Button(action: {
-                    showingConfirmationDialog = true
+                    updateCommonFileds()
                 }, label: {
                     Text("Save")
                         .fontWeight(.bold)
@@ -367,15 +370,6 @@ struct ChosenRoleView : View {
                 })
             
            
-            }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
-                Alert(
-                    title: Text("Edit Info"),
-                    message: Text("Are you sure you want to proceed ?"),
-                    primaryButton: .default(Text("save")) {
-                        updateCommonFileds()
-                    },
-                    secondaryButton: .cancel()
-                )
             }
         }
         func updateCommonFileds(){
@@ -393,7 +387,7 @@ struct ChosenRoleView : View {
                          let keychain = Keychain(service: "esprit.tn.consultplus")
                          keychain["Role"] = "patient"
 
-                       //  navigateToMainPage = true
+                         navigateToMainPage = true
                      }
                      
                  case .failure:
@@ -426,7 +420,7 @@ struct ChosenRoleView : View {
         @Binding var  description: String
         @Binding var image: UIImage?
         @Binding var shouldShowImagePicker : Bool
-        @Binding var showingConfirmationDialog : Bool
+        @Binding var navigateToMainPage : Bool
         var body: some View {
             Form{
                     CommonFileds(fullname: $fullname, email: $email, firstname: $firstname, lastname: $lastname, birthdate: $birthdate, selected_gender: $selected_gender, adresse: $adresse,image: $image,shouldShowImagePicker: $shouldShowImagePicker)
@@ -462,7 +456,8 @@ struct ChosenRoleView : View {
                         .shadow(color: Color.black.opacity(0.08), radius: 60 ,x: 0.0,y:16)
                         .padding()
                     Button(action: {
-                        showingConfirmationDialog = true
+                        updateCommonFileds()
+                        updateDocteurFileds()
                     }, label: {
                         Text("Save")
                             .fontWeight(.bold)
@@ -473,16 +468,6 @@ struct ChosenRoleView : View {
                             .cornerRadius(50).padding()
                     })
             
-            }.scrollContentBackground(.hidden).alert(isPresented: $showingConfirmationDialog) {
-                Alert(
-                    title: Text("Edit Info"),
-                    message: Text("Are you sure you want to proceed ?"),
-                    primaryButton: .default(Text("save")) {
-                        updateCommonFileds()
-                        updateDocteurFileds()
-                    },
-                    secondaryButton: .cancel()
-                )
             }
                 
                 
@@ -505,7 +490,7 @@ struct ChosenRoleView : View {
                          let keychain = Keychain(service: "esprit.tn.consultplus")
                          keychain["Role"] = "doctor"
 
-                       //  navigateToMainPage = true
+                         navigateToMainPage = true
                      }
                      
                  case .failure:

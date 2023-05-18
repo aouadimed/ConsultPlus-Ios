@@ -17,7 +17,7 @@ struct SignInView: View {
     @State private var navigateToMainPage = false
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack(alignment: .top) {
                 NavigationLink(destination: MainActivityView().navigationBarBackButtonHidden(true), isActive: $navigateToMainPage) {
         EmptyView()
@@ -61,11 +61,7 @@ struct SignInView: View {
                     
                     
                     ).navigationBarHidden(true)
-                    
-                    Button("faceid"){
-                        faceid()
-                    }
-                    
+                                        
                     Button(action: {
                         
                         NavigateToMainPage()
@@ -108,6 +104,7 @@ struct SignInView: View {
             
             
         }
+        
 
     }
     
@@ -119,7 +116,8 @@ struct SignInView: View {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: "faceid secuity"){
                 success, AuthenticationError in
                 if success{
-                    NavigateToMainPage()
+                    navigateToMainPage = true
+
                 }else{
                     
                 }
@@ -139,7 +137,6 @@ struct SignInView: View {
              {
              case .success(let userResponse as ApiManager.UserResponse):
                  do {
-                     print("sa7a")
                      // Accessing the name and role properties of the UserResponse object
                      let role = userResponse.role ?? "Unknown"
                      let image = userResponse.image ?? "person.fill"
@@ -159,8 +156,8 @@ struct SignInView: View {
                          }
                      }
                      
-                     
-                     navigateToMainPage = true
+                     faceid()
+
                  }
                  
              case .failure:
@@ -187,5 +184,4 @@ struct SignInView_Previews: PreviewProvider {
         
     }
 }
-
 

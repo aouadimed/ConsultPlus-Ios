@@ -18,6 +18,7 @@
 		5410045729C889090012724B /* consultplusUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */; };
 		5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C60E29C8C289008BE8EC /* SignUpView.swift */; };
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
+		5438A6072A16D76100BA2591 /* MyRdvUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438A6062A16D76100BA2591 /* MyRdvUIView.swift */; };
 		54A8D9212A127F7200844D8A /* ConfirmRdvUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */; };
 		54AA452C29FA289C006ED6FF /* BookingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AA452B29FA289C006ED6FF /* BookingModel.swift */; };
 		54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */; };
@@ -72,6 +73,7 @@
 		5410045629C889090012724B /* consultplusUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = consultplusUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5429C60E29C8C289008BE8EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		5429C61029C8C3F9008BE8EC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		5438A6062A16D76100BA2591 /* MyRdvUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRdvUIView.swift; sourceTree = "<group>"; };
 		54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRdvUIView.swift; sourceTree = "<group>"; };
 		54AA452B29FA289C006ED6FF /* BookingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingModel.swift; sourceTree = "<group>"; };
 		54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				54EA464029EE3D1F0052527C /* DoctorProfilUIView.swift */,
 				54EA464229EE4BD10052527C /* BookingUIView.swift */,
 				54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */,
+				5438A6062A16D76100BA2591 /* MyRdvUIView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				54EA464129EE3D1F0052527C /* DoctorProfilUIView.swift in Sources */,
 				5410043C29C889080012724B /* ContentView.swift in Sources */,
 				5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */,
+				5438A6072A16D76100BA2591 /* MyRdvUIView.swift in Sources */,
 				5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */,
 				54EA464329EE4BD10052527C /* BookingUIView.swift in Sources */,
 				5408AFAD29CA638900B2795B /* MainActivityView.swift in Sources */,

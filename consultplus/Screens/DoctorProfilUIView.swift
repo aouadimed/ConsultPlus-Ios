@@ -32,7 +32,8 @@ struct DoctorProfilUIView: View {
         NavigationView{
 
                 ZStack(alignment: .top) {
-                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail), isActive: $navigateToBookinngPage) {
+                    ScrollView(.vertical) {
+                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail).navigationBarHidden(true), isActive: $navigateToBookinngPage) {
             EmptyView()
                     }
                     Color(.white).edgesIgnoringSafeArea(.all)
@@ -49,7 +50,7 @@ struct DoctorProfilUIView: View {
                             
                             
                         }
-                        ScrollView(.vertical) {
+                      
                         ZStack{
                             Image("Rectangle ili wset").resizable().edgesIgnoringSafeArea(.bottom)
                             VStack(spacing:0 ){

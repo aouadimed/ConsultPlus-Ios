@@ -12,6 +12,7 @@ struct MainActivityView: View {
     @State var selectedTab = "home"
     @State var title = "House"
     @State private var role: String = ""
+    
 
     var body: some View {
         
