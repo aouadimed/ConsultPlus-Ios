@@ -9,9 +9,14 @@ import SwiftUI
 
 struct ForgetPasswordView: View {
     @State private var email: String = ""
+    @State private var navigateToMainPage = false
+
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
+                NavigationLink(destination: SignInView().navigationBarHidden(true), isActive: $navigateToMainPage) {
+        EmptyView()
+                }
                 Color(.white).edgesIgnoringSafeArea(.all)
                 Image("Rectangle ili wset").resizable().padding(.top,100).edgesIgnoringSafeArea(.bottom)
                 VStack{
@@ -33,13 +38,17 @@ struct ForgetPasswordView: View {
                         .shadow(color: Color.black.opacity(0.08), radius: 60 ,x: 0.0,y:16)
                         .padding()
 
-                    Text("Get Link")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("AccentColor"))
-                        .cornerRadius(50).padding()
+                    Button(action: {
+                        getlink(emailUser :email.lowercased())
+                    }, label: {
+                        Text("Rest Password")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("AccentColor"))
+                            .cornerRadius(50).padding()
+                    })
                     
 
                 }
@@ -52,6 +61,24 @@ struct ForgetPasswordView: View {
                 
                 
             }
+        }
+    }
+    func getlink(emailUser : String){
+        ApiManager.shareInstance.ResetPassword(email: emailUser) {
+            (result) in
+             switch result
+             {
+             case .success:
+                 do {
+            
+                     navigateToMainPage=true
+                 }
+                 
+             case .failure:
+                 
+                print("no")
+
+             }
         }
     }
 }

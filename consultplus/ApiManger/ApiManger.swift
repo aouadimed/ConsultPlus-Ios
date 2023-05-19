@@ -21,7 +21,7 @@ typealias Handler = (Swift.Result<Any?, APIErrors>)-> Void
 class ApiManager{
     static let shareInstance = ApiManager()
     
-    let baseUrl = "http://172.20.10.4:5000/"
+    let baseUrl = "http://172.17.1.240:5000/"
    
     struct UserResponse: Codable {
         let email: String?
@@ -671,6 +671,41 @@ class ApiManager{
         let parameters: [String: Any] = [:] // Empty dictionary for POST request
 
         let url = baseUrl + "editstatu?_id=" + Id
+
+        AF.request(url, method: .post, parameters: parameters, headers: headers).responseData { response in
+            debugPrint(response)
+
+            switch response.result {
+            case .success(let data):
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+
+                    if response.response?.statusCode == 200 {
+                        completionHandler(.success(json))
+                    } else {
+                        completionHandler(.failure(.custom(message: "Error")))
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.custom(message: "Please try again")))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completionHandler(.failure(.custom(message: "Request failed")))
+            }
+        }
+    }
+    
+    
+    func ResetPassword(email: String, completionHandler: @escaping Handler) {
+        let headers: HTTPHeaders = [
+            .accept("application/json")
+        ]
+
+        let parameters: [String: Any] = [:] // Empty dictionary for POST request
+
+        let url = baseUrl + "forgot-password?email=" + email
 
         AF.request(url, method: .post, parameters: parameters, headers: headers).responseData { response in
             debugPrint(response)
