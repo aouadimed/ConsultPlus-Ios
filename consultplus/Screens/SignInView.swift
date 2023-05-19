@@ -65,6 +65,7 @@ struct SignInView: View {
                     Button(action: {
                         
                         NavigateToMainPage()
+                       
                         
                         
                     }, label: {
@@ -108,6 +109,9 @@ struct SignInView: View {
 
     }
     
+    
+    
+   
     func faceid(){
         let context = LAContext()
         var error: NSError?

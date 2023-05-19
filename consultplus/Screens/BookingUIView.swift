@@ -58,7 +58,7 @@ struct BookingUIView: View {
 
 /*
     var showIndicators :Bool
-    var axis 
+    var axis
     init(@ViewBuilder content: ()->Content,offset: Binding<CGFloat>,showIndicators: Bool,axis:Axis.Set){
         self.content = content()
         self._offset = offset
@@ -219,14 +219,6 @@ struct BookingUIView: View {
                                     
                                     if(!dateString.isEmpty && !formattedTimeString.isEmpty){
                                         showingConfirmationDialog = true
-                                    }else
-                                    {
-                                        
-                                        
-                                        
-                                        showingErrorMessage = true
-
-                            
                                     }
                                     
                                     
@@ -252,12 +244,6 @@ struct BookingUIView: View {
                             
                                         },
                                         secondaryButton: .cancel()
-                                    )
-                                }        .alert(isPresented: $showingErrorMessage) {
-                                    Alert(
-                                        title: Text("Error"),
-                                        message: Text("Please select a valid date and time."),
-                                        dismissButton: .default(Text("OK"))
                                     )
                                 }
                                 
@@ -379,7 +365,8 @@ DocotrInformation()
              {
              case .success:
                  do {
-               
+                     Notification.notification.send(msg:"booked successfully")
+
                      navigateToMainPage = true
                  }
                  

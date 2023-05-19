@@ -63,7 +63,7 @@ struct DoctorsListUIView: View {
                                         }
                                     }
                                 }
-                            }
+                            }.padding(.bottom,100)
 
                             
                             

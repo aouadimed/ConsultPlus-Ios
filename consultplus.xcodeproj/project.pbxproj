@@ -19,9 +19,11 @@
 		5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C60E29C8C289008BE8EC /* SignUpView.swift */; };
 		5429C61129C8C3F9008BE8EC /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429C61029C8C3F9008BE8EC /* SignInView.swift */; };
 		5438A6072A16D76100BA2591 /* MyRdvUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438A6062A16D76100BA2591 /* MyRdvUIView.swift */; };
+		5438A60B2A17218000BA2591 /* SplashScreenUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438A60A2A17218000BA2591 /* SplashScreenUIView.swift */; };
 		54A8D9212A127F7200844D8A /* ConfirmRdvUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */; };
 		54AA452C29FA289C006ED6FF /* BookingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AA452B29FA289C006ED6FF /* BookingModel.swift */; };
 		54B8434729CB454C0027C2B0 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */; };
+		54C718CF2A17B6C000D78311 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C718CE2A17B6C000D78311 /* Notification.swift */; };
 		54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */; };
 		54E1A0DA29F89A7C00823AE2 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 54E1A0D929F89A7C00823AE2 /* URLImage */; };
 		54E1A0DC29F89A7C00823AE2 /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = 54E1A0DB29F89A7C00823AE2 /* URLImageStore */; };
@@ -74,9 +76,11 @@
 		5429C60E29C8C289008BE8EC /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		5429C61029C8C3F9008BE8EC /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		5438A6062A16D76100BA2591 /* MyRdvUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRdvUIView.swift; sourceTree = "<group>"; };
+		5438A60A2A17218000BA2591 /* SplashScreenUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenUIView.swift; sourceTree = "<group>"; };
 		54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRdvUIView.swift; sourceTree = "<group>"; };
 		54AA452B29FA289C006ED6FF /* BookingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingModel.swift; sourceTree = "<group>"; };
 		54B8434629CB454C0027C2B0 /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
+		54C718CE2A17B6C000D78311 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		54C8781929CD293C00FC9B36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54DA354E29C8CD9700AB1339 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 		54EA463C29EE17400052527C /* HomeUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUIView.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 		5410043829C889080012724B /* consultplus */ = {
 			isa = PBXGroup;
 			children = (
+				54C718CD2A17B6A300D78311 /* Utils */,
 				54C8781929CD293C00FC9B36 /* Info.plist */,
 				54F7758029CA0D0300EA2EA7 /* Models */,
 				54F7757D29CA098500EA2EA7 /* ApiManger */,
@@ -209,8 +214,17 @@
 				54EA464229EE4BD10052527C /* BookingUIView.swift */,
 				54A8D9202A127F7200844D8A /* ConfirmRdvUIView.swift */,
 				5438A6062A16D76100BA2591 /* MyRdvUIView.swift */,
+				5438A60A2A17218000BA2591 /* SplashScreenUIView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		54C718CD2A17B6A300D78311 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				54C718CE2A17B6C000D78311 /* Notification.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		54F7757D29CA098500EA2EA7 /* ApiManger */ = {
@@ -492,9 +506,11 @@
 			files = (
 				54A8D9212A127F7200844D8A /* ConfirmRdvUIView.swift in Sources */,
 				54F7757F29CA0A1500EA2EA7 /* ApiManger.swift in Sources */,
+				54C718CF2A17B6C000D78311 /* Notification.swift in Sources */,
 				54F7758229CA0E4800EA2EA7 /* UserModel.swift in Sources */,
 				54DA354F29C8CD9700AB1339 /* ForgetPasswordView.swift in Sources */,
 				54EA464129EE3D1F0052527C /* DoctorProfilUIView.swift in Sources */,
+				5438A60B2A17218000BA2591 /* SplashScreenUIView.swift in Sources */,
 				5410043C29C889080012724B /* ContentView.swift in Sources */,
 				5429C60F29C8C289008BE8EC /* SignUpView.swift in Sources */,
 				5438A6072A16D76100BA2591 /* MyRdvUIView.swift in Sources */,

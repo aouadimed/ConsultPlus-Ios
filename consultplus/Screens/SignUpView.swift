@@ -64,6 +64,7 @@ struct SignUpView: View {
                     Button(action: {
                         if password == Confirmpassword{
                             signup()
+                            
                         }else{
 
                             
@@ -107,6 +108,8 @@ struct SignUpView: View {
             }
         }
     }
+    
+   
     
     func signup(){
         

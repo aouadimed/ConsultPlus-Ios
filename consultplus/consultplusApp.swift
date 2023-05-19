@@ -11,7 +11,9 @@ import SwiftUI
 struct consultplusApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //ContentView()
+            SplashScreenUIView()
+
         }
     }
 }

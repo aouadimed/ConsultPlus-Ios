@@ -33,7 +33,7 @@ struct DoctorProfilUIView: View {
 
                 ZStack(alignment: .top) {
                     ScrollView(.vertical) {
-                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail).navigationBarHidden(true), isActive: $navigateToBookinngPage) {
+                    NavigationLink(destination: BookingUIView(doctorEmail: doctorEmail), isActive: $navigateToBookinngPage) {
             EmptyView()
                     }
                     Color(.white).edgesIgnoringSafeArea(.all)
